@@ -1,4 +1,3 @@
-
 ll phi(ll n){
 	// initial answer
 	ll ans = n;
@@ -20,7 +19,7 @@ ll PHI(){ //phis[i]== phi(i)
 	for(ll i=1;i<=lim;i++) phis[i]=i;
 	for(ll i=2;i<=lim;i++){
 		if(phis[i]==i){//i is prime
-			for(ll j=i;j<=lim;j+=i){//is is prime factor of j's
+			for(ll j=i;j<=lim;j+=i){//i is prime factor of j's
 				phis[j]=(phis[j]/i)*(i-1);
 			}
 		}
