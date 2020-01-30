@@ -8,19 +8,19 @@ ll phi(ll n){
 			while(n%p==0)n/=p;
 		}
 	}
-	//we found no prime <=sqrt(n) which means n is prime
+	//we found no prime p<=sqrt(n) which means n is prime
 	if(n>1){
 		ans-=ans/n;
 	}
 	return ans;
 }
 
-ll PHI(){ //phis[i]== phi(i)
-	for(ll i=1;i<=lim;i++) phis[i]=i;
+ll PHI(){ //phi[i]== phi(i)
+	for(ll i=1;i<=lim;i++) phi[i]=i;
 	for(ll i=2;i<=lim;i++){
-		if(phis[i]==i){//i is prime
+		if(phi[i]==i){//i is prime
 			for(ll j=i;j<=lim;j+=i){//i is prime factor of j's
-				phis[j]=(phis[j]/i)*(i-1);
+				phi[j]=(phi[j]/i)*(i-1);
 			}
 		}
 	}
