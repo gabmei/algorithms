@@ -1,4 +1,3 @@
-
 //returns base^exp %mod
 ll BinExp(ll base, ll exp, ll mod){
 	ll ans =1;
