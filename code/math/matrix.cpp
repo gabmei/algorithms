@@ -16,7 +16,7 @@ struct Matrix {
 		for(int i=0;i<N;i++){
 			for(int j=0;j<N;j++){
 				for(int k=0;k<N;k++){
-					p.a[i][j]=(p.a[i][j] + a[k][i]*b.a[j][k])%mod;
+					p.a[i][j]=(p.a[i][j] + a[i][k]*b.a[k][j])%mod;
 				}
 			}
 		}
