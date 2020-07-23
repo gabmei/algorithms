@@ -6,7 +6,7 @@ ll BinExp(ll base, ll exp, ll mod){
 			ans=BinMult(ans,base,mod);
 		}
 		base=BinMult(base,base,mod);
-		exp>>=1;
+		exp/=2;
 	}
 	return ans;
 }
@@ -20,7 +20,7 @@ ll BinMult(ll a, ll b, ll mod){
 			ans=(ans+a)%mod;
 		}
 		a=(a*2)%mod;
-		b>>=1;
+		b/=2;
 	}
 	return ans;
 }
