@@ -1,3 +1,15 @@
+/*-------------------------------------------------*/
+const ll mod = 1e9+7;
+ll binExp(ll base, ll exp) {
+    ll ans=1;
+    while (exp) {
+        if (exp & 1)ans = ans * base % mod;
+        base = base * base % mod;
+        exp/=2;
+    }
+    return ans;
+}
+/*-------------------------------------------------*/
 //returns base^exp %mod
 ll BinExp(ll base, ll exp, ll mod){
 	ll ans =1;
