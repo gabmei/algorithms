@@ -11,7 +11,7 @@ Matrix<T> GP_sum(Matrix<T> &ratio, ll n){
 	A.binExp(n/2);
 	if(n%2==1)ret=A,A=A*ratio;
 
-	return ret=ret + (I+A)*PG_sum(ratio,n/2);
+	return ret=ret + (I+A)*GP_sum(ratio,n/2);
 }
 /*----------------------------------------------------------*/
 //Iterative geometric sum implementation
