@@ -34,7 +34,7 @@ struct Matrix {
 	void binExp(ll exp){
 		Matrix<T> ans;ans.identity();
 		
-		while(exp){
+		while(exp>0){
 			if(exp & 1)ans=ans*(*this);
 			exp/=2;
 			(*this)=(*this)*(*this);
@@ -43,3 +43,39 @@ struct Matrix {
 		(*this) = ans;
 	}
 };
+/*----------------------------------------------------------*/
+//Recursive geometric sum
+template<class T>
+Matrix<T> GP_sum(Matrix<T> &ratio, ll n){
+	Matrix<T> ret;
+	if(n==0)return ret;
+	Matrix<T> I,A;
+	I.identity();
+	A=ratio;
+	A.binExp(n/2);
+	if(n%2==1)ret=A,A=A*ratio;
+
+	return ret=ret + (I+A)*PG_sum(ratio,n/2);
+}
+/*----------------------------------------------------------*/
+//Iterative geometric sum
+template<class T>
+Matrix<T> GP_sum(Matrix<T> &ratio, ll n){
+
+	Matrix<T> ans,I,ans_pot,magic;
+	I.identity();
+	magic=I;
+	ans_pot=I;
+	while(n>0){
+		if(n&1){
+			ans = ans_pot*magic + ans;
+			ans_pot=ans_pot*ratio;
+		}
+		magic = ratio*magic + magic;
+		ratio=ratio*ratio;
+		n/=2;
+	}
+
+	return ans;
+}
+/*-----------------------------------------------*/
