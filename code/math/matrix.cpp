@@ -22,6 +22,15 @@ struct Matrix {
 		}
 		return p;
 	}
+	Matrix operator +(Matrix const &b){
+		Matrix s;
+		for(int i=0;i<N;i++){
+			for(int j=0;j<N;j++){
+				s.a[i][j]=(a[i][j] + b.a[i][j])%mod;
+			}
+		}
+		return s;
+	}
 	void binExp(ll exp){
 		Matrix<T> ans;ans.identity();
 		
