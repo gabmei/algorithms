@@ -43,6 +43,7 @@ struct Matrix {
 		(*this) = ans;
 	}
 };
+//S(k) = I + A + A^2 + ... + A^k-1
 /*----------------------------------------------------------*/
 //Recursive geometric sum
 template<class T>
