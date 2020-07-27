@@ -11,7 +11,7 @@ struct Matrix {
 	void identity(){
 		for(int i=0;i<N;i++)for(int j=0;j<N;j++)a[i][j]=(i==j);
 	}
-	Matrix operator *(Matrix const &b){
+	Matrix operator *(const Matrix& b){
 		Matrix p;
 		for(int i=0;i<N;i++){
 			for(int j=0;j<N;j++){
