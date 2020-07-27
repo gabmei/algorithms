@@ -18,9 +18,8 @@ vector<int> sieve(int n){
  
 ll num_div(int n,vector<int> &primes){
 	ll ret=1;
-	int m=n;
 	for(int p:primes){
-		if((ll)p*p>m)break;
+		if((ll)p*p>n)break;
 		if(n%p==0){
 			int exp=0;
 			while(n%p==0){
