@@ -5,8 +5,8 @@ const int N = 2;
 template<class T>
 struct Matrix {
 	vector<vector<T>>a;
-	Matrix(){
-		a=vector<vector<T>>(N,vector<T>(N));
+	Matrix(T val=0){
+		a=vector<vector<T>>(N,vector<T>(N,val));
 	}
 	void identity(){
 		for(int i=0;i<N;i++)for(int j=0;j<N;j++)a[i][j]=(i==j);
@@ -16,7 +16,7 @@ struct Matrix {
 		for(int i=0;i<N;i++){
 			for(int j=0;j<N;j++){
 				for(int k=0;k<N;k++){
-					p.a[i][j]=(p.a[i][j] + a[i][k]*b.a[k][j])%mod;
+					p.a[i][k]=(p.a[i][k] + a[i][j]*b.a[j][k])%mod;
 				}
 			}
 		}
