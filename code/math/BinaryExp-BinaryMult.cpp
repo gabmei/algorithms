@@ -2,7 +2,7 @@
 const ll mod = 1e9+7;
 ll binExp(ll base, ll exp) {
     ll ans=1;
-    while (exp) {
+    while (exp>0) {
         if (exp & 1)ans = ans * base % mod;
         base = base * base % mod;
         exp/=2;
