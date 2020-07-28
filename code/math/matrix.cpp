@@ -22,7 +22,7 @@ struct Matrix {
 		}
 		return p;
 	}
-	Matrix operator +(Matrix const &b){
+	Matrix operator +(const Matrix& b){
 		Matrix s;
 		for(int i=0;i<N;i++){
 			for(int j=0;j<N;j++){
