@@ -1,14 +1,11 @@
-#include<bits/stdc++.h>
-using namespace std;
-
 typedef long long ll;
 const ll inf=1e12;
 vector<vector<pair<int,ll>>> adj;
 
 void dijkstra(int s,vector<ll>& d,vector<int>& p){
 	int n=adj.size();
-	d.assign(n,inf);
-	p.assign(n,-1);
+	d.assign(n,inf);//distance from root array
+	p.assign(n,-1);//predecessor array
 
 	d[s]=0;
 	using pii=pair<ll,int>;
@@ -48,9 +45,4 @@ vector<int> restore_path(int s, int t,const vector<int>& p){
 	reverse(ret.begin(),ret.end());
 
 	return ret;
-}
-
-int main(){
-
-	return 0;
 }
