@@ -38,3 +38,27 @@ struct sparseT{
 		return ret;
 	}
 };
+/*---------------------------------------------------*/
+//For cyclic arrays
+vector<vector<int>>st;
+
+int l = 31;
+int go(int u, int len){
+	for(int j=0;j<l;j++){
+		if((1<<j)&len){
+			u=st[j][u];
+		}
+	}
+	return u;
+}
+
+st=vector<vector<int>>(l+1,vector<int>(n));
+for(int i=0;i<n;i++){
+	st[0][i]=v[i];
+}
+
+for(int j=1;j<l;j++){
+	for(int i=0;i<n;i++){
+		st[j][i]=st[j-1][st[j-1][i]];
+	}
+}
