@@ -43,7 +43,7 @@ struct sparseT{
 vector<vector<int>>st;
 
 int l = 31;
-int go(int u, int len){
+int go(int u, int len){// walk len steps starting from u
 	for(int j=0;j<l;j++){
 		if((1<<j)&len){
 			u=st[j][u];
