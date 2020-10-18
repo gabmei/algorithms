@@ -23,18 +23,18 @@ node combine(const node& a,const node& b){
 }
 
 void calc(node& a, const node& b, ll len){
-    a= node(b.x*len);
+	a= node(b.x*len);
 }
 
 void push(int pos, int tl,int tr){
 	if(lazy[pos]!=nil){
-		int esq=2*pos, dir=2*pos+1;
+	int esq=2*pos, dir=2*pos+1;
         int mid = (tl+tr)/2;
-		calc(tree[esq],lazy[pos],mid-tl+1);
+	calc(tree[esq],lazy[pos],mid-tl+1);
         calc(tree[dir],lazy[pos],tr-(mid+1)+1);
 
-		lazy[esq]=lazy[dir]=lazy[pos];
-		lazy[pos]=nil;
+	lazy[esq]=lazy[dir]=lazy[pos];
+	lazy[pos]=nil;
 	}
 }
 
