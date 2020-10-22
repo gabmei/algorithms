@@ -35,7 +35,7 @@ int dijkstra(int xs, int ys,int xt, int yt){
 
 			if(nx<0||ny<0||nx>=n||ny>=m || grid[nx][ny]=='#'){
 				//invalid position
-				break;
+				continue;
 			}
 			//all weights are one in this problem
 			if(dist[x][y]+1<dist[nx][ny]){
