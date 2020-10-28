@@ -1,34 +1,82 @@
-//storing all values of a component
-vector<int>p;
-vector<vector<int>>l;
-void init_(int n){
-	p=vector<int>(n+1);//parent array
-	l=vector<vector<int>>(n+1);//l[get_set[i]] stores all values of this component
+#include<bits/stdc++.h>
+using namespace std;
 
-	for(int i=1;i<=n;i++){
-		p[i]=i;
-		l[i]={i};
+struct DSU{
+    vector<int>p;
+	vector<vector<int>>l;
+    DSU(int n):p(n),l(n){//0-based
+        for(int i=0;i<n;i++){
+        	p[i]=i,l[i]={i};
+        }
+    }
+    int getSet(int a){
+		return p[a];
 	}
-}
-int get_set(int a){
-	return p[a];
-}
+    void unionSet(int a, int b){
+		a=getSet(a);
+		b=getSet(b);
 
-void union_set(int a, int b){
-	a=get_set(a);
-	b=get_set(b);
+		if(a!=b){
+			if(l[a].size()>l[b].size()){
+				swap(a,b);
+			}
+			while(!l[a].empty()){	
+				int u=l[a].back();
+				p[u]=b;
 
-	if(a!=b){
-		//union small to large
-		if(l[a].size()>l[b].size()){
-			swap(a,b);
-		}
-		while(!l[a].empty()){	
-			int u=l[a].back();
-			p[u]=b;
-
-			l[b].push_back(u);
-			l[a].pop_back();
+				l[b].push_back(u);
+				l[a].pop_back();
+			}
 		}
 	}
+};
+
+int main(){
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	int n,m,k;
+	cin>>n>>m>>k;
+	DSU dsu(n);
+
+	for(int i=0;i<m;i++){
+		int u,v;
+		cin>>u>>v;
+	}
+
+	vector<vector<int>>foo;
+	for(int i=0;i<k;i++){
+		string a;
+		cin>>a;
+		int u,v;
+		cin>>u>>v;
+		u--;v--;
+		int tmp=a[0]=='c';
+		foo.push_back({tmp,u,v});
+	}
+	
+	reverse(foo.begin(),foo.end());
+
+	vector<string>ans;
+
+	for(auto& v:foo){
+		//cout<<v[0]<<' '<<v[1]<<' '<<v[2]<<'\n';
+		
+		if(v[0]==1){//join
+			dsu.unionSet(v[1],v[2]);
+		}else{
+			if(dsu.getSet(v[1])==dsu.getSet(v[2])){
+				ans.push_back("YES");
+			}else{
+				ans.push_back("NO");
+			}
+		}
+		
+	}
+	
+	reverse(ans.begin(),ans.end());
+	for(string& s:ans){
+		cout<<s<<'\n';
+	}
+	
+	return 0;
 }
