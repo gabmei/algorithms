@@ -1,31 +1,31 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int>p,sz;
-void init_(int n){
-	p=vector<int>(n+1);
-	iota(p.begin(),p.end(),0);
-
-	sz=vector<int>(n+1,1);
-}
-int get_set(int a){
-	return p[a]=(p[a]==a?a:get_set(p[a]));//path compression
-}
-
-void union_set(int a, int b){
-	a=get_set(a);
-	b=get_set(b);
-
-	if(a!=b){
-		//Union by size
-		if(sz[a]>sz[b]){
-			swap(a,b);
-		}
-		p[a]=b;
-		sz[b]+=sz[a];
-
-	}
-}
+struct DSU{
+    int n;
+    vector<int>p,sz;
+    DSU(int n):n(n),p(n),sz(n){//0-based
+        iota(p.begin(),p.end(),0);
+        fill(sz.begin(),sz.end(),1);
+    }
+    int get_set(int a){
+        return p[a]=(p[a]==a?a:get_set(p[a]));//path compression
+    }
+    void union_set(int a, int b){
+        a=get_set(a);
+        b=get_set(b);
+ 
+        if(a!=b){
+            //Union by size
+            if(sz[a]>sz[b]){
+                swap(a,b);
+            }
+            p[a]=b;
+            sz[b]+=sz[a];
+ 
+        }
+    }
+};
 
 int main(){
 	ios_base::sync_with_stdio(false);
@@ -33,18 +33,25 @@ int main(){
 	
 	int n,m;
 	cin>>n>>m;
-	init_(n);
+	DSU dsu(n);
 
 	for(int i=0;i<m;i++){
+		string op;
 		int u,v;
-		cin>>u>>v;
-		union_set(u,v);
+		cin>>op>>u>>v;
+		u--;v--;
+		if(op=="union"){
+			dsu.union_set(u,v);
+		}else if(op == "get"){
+			if(dsu.get_set(u)==dsu.get_set(v)){
+				cout<<"YES\n";
+			}else{
+				cout<<"NO\n";
+			}
+		}
 	}
-	int cnt=0;
-	for(int i=1;i<=n;i++){
-		cnt+=get_set(i)==i;
-	}
-	cout<<cnt-1<<'\n';
+	
+	
 	
 	return 0;
 }
