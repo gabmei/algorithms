@@ -2,18 +2,17 @@
 using namespace std;
 
 struct DSU{
-    int n;
     vector<int>p,sz;
-    DSU(int n):n(n),p(n),sz(n){//0-based
+    DSU(int n):p(n),sz(n){//0-based
         iota(p.begin(),p.end(),0);
         fill(sz.begin(),sz.end(),1);
     }
-    int get_set(int a){
-        return p[a]=(p[a]==a?a:get_set(p[a]));//path compression
+    int getSet(int a){
+        return p[a]=(p[a]==a?a:getSet(p[a]));//path compression
     }
-    void union_set(int a, int b){
-        a=get_set(a);
-        b=get_set(b);
+    void unionSet(int a, int b){
+        a=getSet(a);
+        b=getSet(b);
  
         if(a!=b){
             //Union by size
@@ -22,8 +21,14 @@ struct DSU{
             }
             p[a]=b;
             sz[b]+=sz[a];
- 
         }
+    }
+    int countSets(){
+    	int n = (int)p.size(),cnt=0;
+    	for(int i=0;i<n;i++){
+    		cnt+=i==getSet(i);
+    	}
+    	return cnt;
     }
 };
 
@@ -41,9 +46,9 @@ int main(){
 		cin>>op>>u>>v;
 		u--;v--;
 		if(op=="union"){
-			dsu.union_set(u,v);
+			dsu.unionSet(u,v);
 		}else if(op == "get"){
-			if(dsu.get_set(u)==dsu.get_set(v)){
+			if(dsu.getSet(u)==dsu.getSet(v)){
 				cout<<"YES\n";
 			}else{
 				cout<<"NO\n";
