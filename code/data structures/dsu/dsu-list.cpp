@@ -2,17 +2,17 @@
 using namespace std;
 
 struct DSU{
-    vector<int>p;
+  	vector<int>p;
 	vector<vector<int>>l;
-    DSU(int n):p(n),l(n){//0-based
-        for(int i=0;i<n;i++){
-        	p[i]=i,l[i]={i};
-        }
-    }
-    int getSet(int a){
+  	DSU(int n):p(n),l(n){//0-based
+	    for(int i=0;i<n;i++){
+	    	p[i]=i,l[i]={i};
+	    }
+	}
+	int getSet(int a){
 		return p[a];
 	}
-    void unionSet(int a, int b){
+	void unionSet(int a, int b){
 		a=getSet(a);
 		b=getSet(b);
 
@@ -59,8 +59,6 @@ int main(){
 	vector<string>ans;
 
 	for(auto& v:foo){
-		//cout<<v[0]<<' '<<v[1]<<' '<<v[2]<<'\n';
-		
 		if(v[0]==1){//join
 			dsu.unionSet(v[1],v[2]);
 		}else{
