@@ -23,3 +23,20 @@ vector<int> get_primes(int x){//get all prime factors of a number
 	}
 	return ret;
 }
+
+vector<int> getDivisors(int x){
+	vector<int>divisors({1});
+	while(x!=1){
+		int p=spf[x];
+		int e=0;
+		while(x%p==0){x/=p;e++;}
+		int n = (int)divisors.size();
+		for(int i=0;i<n;i++){
+			int u = divisors[i];
+			for(int j=1,v=p;j<=e;j++,v*=p){
+				divisors.push_back(u*v);
+			}
+		}
+	}
+	return divisors;
+}
