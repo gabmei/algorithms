@@ -27,7 +27,7 @@ struct SegmentTree{
 			calc(tree[dir],lazy[pos],tr-(mid+1)+1);
 		
 			lazy[esq]=lazy[dir]=lazy[pos];
-			lazy[pos]=nil;
+			lazy[pos]=nada;
 		}
 	}
 	void build(int pos,int tl,int tr, const vector<node>& arr){
