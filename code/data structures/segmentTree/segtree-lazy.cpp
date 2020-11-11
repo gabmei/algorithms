@@ -1,96 +1,83 @@
-//range assign update, range sum query
-
-#include<bits/stdc++.h>
-using namespace std;
-typedef long long ll;
 struct node{
-	ll x;
-	node(ll x):x(x){}
-	bool operator == (node o) {return x==o.x;}
-	bool operator != (node o) {return x!=o.x;}
-}nil(0);
-
-vector<node>tree;
-vector<node>lazy;
-
-void init_(int n){
-	tree.assign(4*(n+1),nil);
-	lazy.assign(4*(n+1),nil);
-}
-
-node combine(const node& a,const node& b){
-	return node(a.x+b.x);
-}
-
-void calc(node& a, const node& b, ll len){
-	a= node(b.x*len);
-}
-
-void push(int pos, int tl,int tr){
-	if(lazy[pos]!=nil){
-	int esq=2*pos, dir=2*pos+1;
-        int mid = (tl+tr)/2;
-	calc(tree[esq],lazy[pos],mid-tl+1);
-        calc(tree[dir],lazy[pos],tr-(mid+1)+1);
-
-	lazy[esq]=lazy[dir]=lazy[pos];
-	lazy[pos]=nil;
+    	int x;
+    	node(int x=0):x(x){}
+	node operator+(const node& o){ // merge function
+		return node(x+o.x);
 	}
-}
-
-void update(int pos, int tl, int tr, int l, int r, node val){
-	int esq=2*pos, dir=2*pos+1;
-	int mid = (tl+tr)/2;	
-	
-	if(tl>r ||tr<l){
-		return;
-	}else if(tl>=l && tr<=r){
-		calc(tree[pos],val,tr-tl+1);
-		lazy[pos]=val;
-	}else{
-		push(pos,tl,tr);
-		update(esq,tl,mid,l,r,val);
-		update(dir,mid+1,tr,l,r,val);
-
-		tree[pos]=combine(tree[esq],tree[dir]);
+	bool operator!=(const node& o){
+		return o.x != x;
 	}
-	
-}
-node query(int pos, int tl, int tr, int l, int r){
-	int esq=2*pos, dir=2*pos+1;
-	int mid = (tl+tr)/2;
+}nil(0),nada(-1);
+ 
+struct SegmentTree{
+	vector<node>tree,lazy;
+	int n;
+	SegmentTree(){}
+	SegmentTree(int n):n(n),tree(4*n,nil),lazy(4*n,nada){}
 
-	if(tl>r ||tr<l){
-		return nil;
-	}else if(tl>=l && tr<=r){
-		return tree[pos];
-	}else{
-		push(pos,tl,tr);
-		auto left=query(esq,tl,mid,l,r),right=query(dir,mid+1,tr,l,r);
-		return combine(left,right);
+	void calc(node& a, const node& b, int len){
+		a= node(b.x*len);
 	}
-}
-int main(){
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-
-	int n,m;
-	cin>>n>>m;
-	init_(n);
-	while(m--){
-		int op;
-		cin>>op;
-		if(op==1){
-			int l,r,v;
-			cin>>l>>r>>v;
-			update(1,0,n-1,l,r-1,node(v));
-		}else{
-			int l,r;
-			cin>>l>>r;
-			ll ans = query(1,0,n-1,l,r-1).x;
-			cout<<ans<<'\n';
+    
+	void push(int pos, int tl,int tr){ //assignment update, sum query
+		if(lazy[pos]!=nada){
+			int esq=2*pos, dir=2*pos+1;
+			int mid = (tl+tr)/2;
+			calc(tree[esq],lazy[pos],mid-tl+1);
+			calc(tree[dir],lazy[pos],tr-(mid+1)+1);
+		
+			lazy[esq]=lazy[dir]=lazy[pos];
+			lazy[pos]=nil;
 		}
 	}
-
-	return 0;
-}
+	void build(int pos,int tl,int tr, const vector<node>& arr){
+		int esq=2*pos, dir=2*pos+1;
+		int mid = (tl+tr)/2;
+		if(tl==tr){
+			tree[pos]=arr[tl];
+		}else{
+			build(esq,tl,mid,arr);
+			build(dir,mid+1,tr,arr);
+ 
+			tree[pos]=tree[esq] + tree[dir];
+		}
+	}
+	void build(const vector<node>& arr){
+		build(1,0,n-1,arr);
+	}
+	void update(int pos,int tl,int tr,int l, int r, node x){
+		int esq=2*pos, dir=2*pos+1;
+		int mid = (tl+tr)/2;
+		if(tl>r || tr<l){
+			return;
+		}else if(tl>=l && tr<=r){
+			calc(tree[pos],x,tr-tl+1);
+		    	lazy[pos]=x;
+		}else{
+			push(pos,tl,tr);
+			update(esq,tl,mid,l,r,x);
+			update(dir,mid+1,tr,l,r,x);
+ 
+			tree[pos]=tree[esq]+tree[dir];
+		}
+	}
+ 
+	void update(int l, int r, node x){
+		update(1,0,n-1,l,r, x);
+	}
+	node query(int pos, int tl, int tr, int l, int r){
+		int esq=2*pos, dir=2*pos+1;
+		int mid = (tl+tr)/2;
+		if(tl>r || tr<l){
+			return nil;//depends of the query type
+		}else if(tl>=l && tr<=r){
+			return tree[pos];
+		}else{
+			push(pos,tl,tr);
+			return query(esq,tl,mid,l,r) + query(dir,mid+1,tr,l,r);
+		}
+	}
+	node query(int l, int r){
+		return query(1,0,n-1,l,r);
+	}
+};
