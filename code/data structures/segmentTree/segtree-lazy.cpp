@@ -1,6 +1,6 @@
 struct node{
     	int x;
-    	node(int x=0):x(x){}
+    	node(int x_=0):x(x_){}
 	node operator+(const node& o){ // merge function
 		return node(x+o.x);
 	}
@@ -10,10 +10,9 @@ struct node{
 }nil(0),nada(-1);
  
 struct SegmentTree{
-	vector<node>tree,lazy;
 	int n;
-	SegmentTree(){}
-	SegmentTree(int n):n(n),tree(4*n,nil),lazy(4*n,nada){}
+	vector<node>tree,lazy;
+	SegmentTree(int n_=0):n(n_),tree(4*n,nil),lazy(4*n,nada){}
 
 	void calc(node& a, const node& b, int len){
 		a= node(b.x*len);
