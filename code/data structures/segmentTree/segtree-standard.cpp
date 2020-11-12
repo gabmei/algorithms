@@ -1,11 +1,11 @@
 struct node{
     int r,b;
-    node(int r=0,int b=0):r(r),b(b){}
+    node(int r_=0,int b_=0):r(r_),b(b_){}
 }nil(0,0);
 struct SegmentTree{
-	vector<node>tree;
 	int n;
-	SegmentTree(int n):n(n),tree(4*n,nil){}
+	vector<node>tree;
+	SegmentTree(int n_=0):n(n_),tree(4*n,nil){}
 	node combine(const node& a,const node& b){ //merge function
 		return node(a.r+b.r,a.b+b.b);
 	}
