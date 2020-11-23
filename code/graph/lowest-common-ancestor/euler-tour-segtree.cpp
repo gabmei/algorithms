@@ -4,44 +4,44 @@ typedef long long ll;
 
 struct LCA{
  	vector<int> height, epath, tin, segtree;
-    int n;
+    	int n;
 	int m;
-    LCA(vector<vector<int>> &adj, int root = 0) {
-        n = adj.size();
-        height.resize(n);
-        tin.resize(n);
-        dfs(adj, root);
-        m = epath.size();
-        segtree.resize(m * 4);
-        build(1, 0, m - 1);
-    }
+    	LCA(vector<vector<int>> &adj, int root = 0) {
+		n = adj.size();
+		height.resize(n);
+		tin.resize(n);
+		dfs(adj, root);
+		m = epath.size();
+		segtree.resize(m * 4);
+		build(1, 0, m - 1);
+    	}
 
-    void dfs(vector<vector<int>> &adj, int u,int p=-1, int h=0) {
-        height[u] = h;
-        tin[u]=epath.size();
-        epath.push_back(u);
-        for (int v:adj[u]) {
-            if (v!=p) {
-                dfs(adj, v,u, h + 1);
-                epath.push_back(u);
-            }
-        }
-    }
+    	void dfs(vector<vector<int>> &adj, int u,int p=-1, int h=0) {
+		height[u] = h;
+		tin[u]=epath.size();
+		epath.push_back(u);
+		for (int v:adj[u]) {
+			if (v!=p) {
+				dfs(adj, v,u, h + 1);
+				epath.push_back(u);
+		    	}
+		}
+	}
 
-    void build(int pos, int l, int r) {
-        if (l==r) {
-            segtree[pos] = epath[l];
-        } else {
-            int mid = (l+r)/2;
-            build(2*pos, l, mid);
-            build(2*pos+1, mid + 1, r);
-            int left = segtree[2*pos], right = segtree[2*pos+1];
-            segtree[pos] = (height[left] < height[right]) ? left : right;
-        }
-    }
+    	void build(int pos, int l, int r) {
+        	if(l==r){
+            		segtree[pos] = epath[l];
+        	}else{
+			int mid = (l+r)/2;
+		    	build(2*pos, l, mid);
+		    	build(2*pos+1, mid + 1, r);
+		    	int left = segtree[2*pos], right = segtree[2*pos+1];
+		    	segtree[pos] = (height[left] < height[right]) ? left : right;
+        	}
+    	}
 
     int query(int pos, int l, int r, int a, int b) {
-        if (l > b || r < a)return -1;
+    	if (l > b || r < a)return -1;
         if (l >= a && r <= b)return segtree[pos];
         int mid = (l+r)/2;
         int left = query(pos << 1, l, mid, a, b);
@@ -53,7 +53,7 @@ struct LCA{
 
     int lca(int u, int v) {
 		tie(u,v)=minmax(tin[u],tin[v]);
-        return query(1, 0, m-1, u,v);
+        	return query(1, 0, m-1, u,v);
     }
 };
 int main(){
