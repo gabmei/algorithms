@@ -40,16 +40,16 @@ struct LCA{
 	void dfs(vector<vector<int>>& adj, int u=0, int p=-1, int h=0){
 		depth[u]=h;
 		time[u]=epath.size();
-        epath.push_back(u);
+        	epath.push_back(u);
 		ret.push_back(time[u]);
-        for (int v:adj[u]) {
-            if (v!=p) {
-                dfs(adj, v,u, h + 1);
-                epath.push_back(u);
+		for(int v:adj[u]){
+			if (v!=p){
+				dfs(adj, v,u, h + 1);
+				epath.push_back(u);
 				ret.push_back(time[u]);
-            }
-        }
-    }	
+			}
+		}
+	}	
 	int lca(int a, int b){
 		tie(a,b)=minmax(time[a],time[b]);
 		return epath[rmq.query(a,b)];
