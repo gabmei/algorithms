@@ -1,14 +1,14 @@
 struct node{
-    int r,b;
-    node(int r_=0,int b_=0):r(r_),b(b_){}
-}nil(0,0);
+    	int x;
+	node(int x_=0):x(x_){}
+	node operator+(const node &o){ // merge function
+		return node(x^o.x);
+	}
+}nil(0);
 struct SegmentTree{
 	int n;
 	vector<node>tree;
 	SegmentTree(int n_=0):n(n_),tree(4*n,nil){}
-	node combine(const node& a,const node& b){ //merge function
-		return node(a.r+b.r,a.b+b.b);
-	}
 	void build(int pos,int tl,int tr,const vector<node> &arr){
 		int esq=2*pos, dir=2*pos+1;
 		int mid = (tl+tr)/2;
@@ -18,7 +18,7 @@ struct SegmentTree{
 			build(esq,tl,mid,arr);
 			build(dir,mid+1,tr,arr);
  
-			tree[pos]=combine(tree[esq],tree[dir]);
+			tree[pos]=tree[esq]+tree[dir];
 		}
 	}
 	void build(const vector<node> &arr){
@@ -29,12 +29,12 @@ struct SegmentTree{
 		int esq=2*pos, dir=2*pos+1;
 		int mid = (tl+tr)/2;
 		if(tl==tr){
-			tree[pos]=val;//assign update
+			tree[pos]=tree[pos]+val;//assign update
 		}else{
 			if(x<=mid)update(esq,tl,mid,x,val);
 			else update(dir,mid+1,tr,x,val);
 	 
-			tree[pos]=combine(tree[esq],tree[dir]);
+			tree[pos]=tree[esq]+tree[dir];
 		}
 	}
  
@@ -51,7 +51,7 @@ struct SegmentTree{
 		}else if(tl>=l && tr<=r){
 			return tree[pos];
 		}else{
-			return combine(query(esq,tl,mid,l,r), query(dir,mid+1,tr,l,r));
+			return query(esq,tl,mid,l,r)+query(dir,mid+1,tr,l,r);
 		}
 	}
 	node query(int l, int r){
