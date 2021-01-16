@@ -5,14 +5,14 @@ struct RMQ{
 	vector<vector<T>>st;
 	RMQ(){};
 	RMQ(const vector<T>& V){
-		N=V.size();
+		N=(int)V.size();
 		st=vector<vector<T>>(K+1,vector<T>(N));
 		for(int i=0;i<N;i++){
 			st[0][i]=V[i];
 		}
 		for(int j=1;j<=K;j++){
 			for(int i=0;i+(1<<j)<=N;i++){
-				st[j][i]=min(st[j-1][i],st[j-1][i+(1<<j-1)]);
+				st[j][i]=min(st[j-1][i],st[j-1][i + ( 1<<(j-1) ) ]);
 			}
 		}
 	}
