@@ -5,7 +5,7 @@ struct LCA{
     int n,l,timer;
     vector<int>tin,tout,depth;
     vector<vector<int>>up;
-    LCA(const vector<vector<int>>& adj, int root=0):n(adj.size()),tin(n),tout(n),depth(n){
+    LCA(const vector<vector<int>>& adj, int root=0):n((int)adj.size()),tin(n),tout(n),depth(n){
         l=31-__builtin_clz(n);
         timer=0;
         up=vector<vector<int>>(l+1,vector<int>(n));
