@@ -46,7 +46,7 @@ struct SegmentTree{
 		int esq=2*pos, dir=2*pos+1;
 		int mid = (tl+tr)/2;
 	 
-		if(r<tl || l>tr){
+		if(tl>r || tr<l){
 			return nil;//depends of the query type
 		}else if(tl>=l && tr<=r){
 			return tree[pos];
