@@ -1,10 +1,10 @@
-template<int m>
+template<int MOD>
 struct MB{
     int x;
-    MB(int x_=0):x(x_<0 ? x_+m : x_>=m ? x_-m : x_){}
-    MB operator +(const MB& o){return x+o.x >=m ? x+o.x-m : x+o.x;}
-    MB operator -(const MB& o){return x-o.x < 0 ? x-o.x+m : x-o.x;}
-    MB operator *(const MB& o){return int(1ll*x*o.x%m);}
+    MB(int x_=0):x(x_<0 ? x_+MOD : x_>=MOD ? x_-MOD : x_){}
+    MB operator +(const MB& o){return x+o.x >=MOD ? x+o.x-MOD : x+o.x;}
+    MB operator -(const MB& o){return x-o.x < 0 ? x-o.x+MOD : x-o.x;}
+    MB operator *(const MB& o){return int(1ll*x*o.x%MOD);}
     operator int(){return x;}
     friend ostream& operator<< (ostream& os, MB& o) { return os << o.x; }
     friend istream& operator>> (istream& is, MB& o) { return is >> o.x; }
