@@ -8,9 +8,7 @@ struct vec{
         vec r(n);
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                int id=(i+j);
-                if(id>=n)id-=n;
-                r.v[id]+=v[i]*o.v[j];
+                r.v[(i+j)%n]+=v[i]*o.v[j];
             }
         }
         return r;
@@ -18,7 +16,7 @@ struct vec{
     T& operator[](int i){ return v[i]; }
 };
 template<class T>
-vec<T> binExp(vec<T>a,long long e){
+vec<T> binExp(vec<T> a,long long e){
     vec<T>r(a.n);r.v[0]=1;
     while(e){
         if(e&1)r*=a;
