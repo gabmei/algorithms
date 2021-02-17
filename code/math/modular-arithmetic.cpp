@@ -16,6 +16,8 @@ struct MB{
     void operator -=(const MB& o){ *this = *this - o; }
     void operator *=(const MB& o){ *this = *this * o; }
     void operator /=(const MB& o){ *this = *this / o; }
+    MB& operator ++(){ return *this = *this + MB(1); }
+    MB operator ++(int){ MB r=*this; ++(*this); return r; }
     MB operator +(const MB& o){ return x+o.x >=mod ? x+o.x-mod : x+o.x; }
     MB operator -(const MB& o){ return x-o.x < 0 ? x-o.x+mod : x-o.x; }
     MB operator *(const MB& o){ return int(1ll*x*o.x%mod); }
