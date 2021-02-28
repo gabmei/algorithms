@@ -6,13 +6,22 @@ struct BIT{
     void update(int x, T val){
         for(;x<=n;x+=(x&-x))bit[x]+=val;
     }
-    T query(int x){
+    T query(int x){ //query on [1,r]
         T ret=0;
         for(;x>0;x-=(x&-x))ret+=bit[x];
         return ret;
     }
-    T query(int l, int r){
-        return query(r)-query(l-1);
+    T query(int l, int r){ //query on [l,r]
+        if(l==r){
+            if(r==0)return bit[r];
+            T ret=bit[r--];
+            for(l-=(l&-l);l!=r;r-=(r&-r)){
+                ret-=bit[r];
+            }
+            return ret;
+        }else{
+            return query(r)-query(l-1);
+        }
     }
     int lower_bound(T sum){ // first pos such that sum [1, pos] >= sum
         int pos=0;
