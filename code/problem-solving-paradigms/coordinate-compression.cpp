@@ -9,10 +9,6 @@ struct CoordinateCompression{
     }
     int operator[](const T &a){
         auto it=lower_bound(v.begin(),v.end(),a);
-        return it != v.end() && *it == a ? int(it - v.begin()):-1;
-    }
-    int lower_bound(const T &a){
-        auto it=lower_bound(v.begin(),v.end(),a);
         return int(it - v.begin());
     }
 };
