@@ -12,16 +12,16 @@ void sieve(int lim){
 		}
 	}
 }
-vector<int> get_primes(int x){//get all prime factors of a number
-	vector<int>ret;
-	while(x!=1){
-		int p = spf[x];
-		ret.push_back(p);
-		while(x%p==0){
-			x/=p;
-		}
-	}
-	return ret;
+template<class T>
+void getPrimes(int x, T get){
+    while(x != 1){
+        int p = spf[x];
+        while(x%p==0){
+            x/=p;
+        }
+        get(p);
+    }
+    return;
 }
 
 vector<int> getDivisors(int x){
