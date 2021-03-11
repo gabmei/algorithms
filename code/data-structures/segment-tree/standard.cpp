@@ -1,6 +1,6 @@
 struct node{
-    	int x;
-	node(int x_=0):x(x_){}
+    int x;
+	node(int _x=0):x(_x){}
 	node operator+(const node &o){ // merge function
 		return node(x^o.x);
 	}
@@ -8,7 +8,7 @@ struct node{
 struct SegmentTree{
 	int n;
 	vector<node>tree;
-	SegmentTree(int n_=0):n(n_),tree(4*n,nil){}
+	SegmentTree(int _n=0):n(_n),tree(4*n,nil){}
 	void build(int pos,int tl,int tr,const vector<node> &arr){
 		int esq=2*pos, dir=2*pos+1;
 		int mid = (tl+tr)/2;
