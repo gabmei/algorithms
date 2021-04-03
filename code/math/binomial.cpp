@@ -1,7 +1,7 @@
 const int mod=1e9+7;
 struct MB{
     int x;
-    MB(int x_=0):x(x_){}
+    MB(int _x=0):x(_x){}
     void operator +=(const MB& o){ *this = *this + o; }
     void operator -=(const MB& o){ *this = *this - o; }
     void operator *=(const MB& o){ *this = *this * o; }
@@ -24,7 +24,8 @@ struct Binomial{
             invFat[i] = invFat[i-1]*inv[i];
         }
     }
-    MB comb(int n, int k){
+    // n choose k
+    MB operator() (int n, int k){
         return fat[n]*invFat[k]*invFat[n-k];
     }
 };
