@@ -2,7 +2,7 @@ template<class T>
 struct vec{
     int n;
     vector<T>v;
-    vec(int n_,T val=0):n(n_),v(n,val){}
+    vec(int _n,T val=0):n(_n),v(n,val){}
     void operator *=(const vec& o){ *this = *this * o; }
     vec operator *(const vec& o){
         vec r(n);
