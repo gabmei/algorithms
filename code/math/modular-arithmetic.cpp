@@ -11,7 +11,7 @@ T binExp(T a, long long e){
 }
 struct MB{
     int x;
-    MB(int x_=0):x(x_){}
+    MB(int _x=0):x(_x){}
     void operator +=(const MB& o){ *this = *this + o; }
     void operator -=(const MB& o){ *this = *this - o; }
     void operator *=(const MB& o){ *this = *this * o; }
