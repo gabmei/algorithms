@@ -20,7 +20,7 @@ struct Binomial{
         inv[1] = 1;
         for(int i=2;i<n;++i){
             fat[i] = MB(i)*fat[i-1];
-            inv[i] = MB(mod) - MB(mod/i)*inv[mod%i]; 
+            inv[i] = MB(0) - MB(mod/i)*inv[mod%i]; 
             invFat[i] = invFat[i-1]*inv[i];
         }
     }
