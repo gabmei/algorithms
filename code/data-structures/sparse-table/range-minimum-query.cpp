@@ -6,7 +6,7 @@ struct RMQ{
 	RMQ(){};
 	RMQ(const vector<T>& V){
 		N=(int)V.size();
-		st=vector<vector<T>>(K+1,vector<T>(N));
+		st.assign(K+1,vector<T>(N));
 		for(int i=0;i<N;i++){
 			st[0][i]=V[i];
 		}
