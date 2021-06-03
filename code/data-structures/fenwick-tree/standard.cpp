@@ -25,7 +25,7 @@ struct BIT{
     }
     int lower_bound(T sum){ // first pos such that sum [1, pos] >= sum
         int pos=0;
-        for(int pw=(1<<25);pw>=0;pw>>=1){
+        for(int pw=(1<<25);pw>0;pw>>=1){
             if(pos+pw<=n && bit[pos+pw]<sum){
                 sum-=bit[pos+pw];
                 pos+=pw;
