@@ -3,7 +3,7 @@ typedef long long ll;
 const int lim=1e6+100;
 bool is_prime[lim];
 int mu[lim];
-void sieve(int lim){
+void sieve(){
 	for(int i=1;i<lim;i++){
 		is_prime[i]=true;
 		mu[i]=1;
@@ -16,8 +16,10 @@ void sieve(int lim){
 				mu[j]*=-1;
 				is_prime[j]=false;
 			}
-			ll sq=(ll)i*i;
-			for(ll j=sq;j<lim;j+=sq){
+			//lim <= i * i
+			if(lim / i / i == 0)continue;
+			int sq = i*i;
+			for(int j=sq;j<lim;j+=sq){
 				mu[j]=0;
 			}
 		}
