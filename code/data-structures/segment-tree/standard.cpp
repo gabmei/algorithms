@@ -1,5 +1,5 @@
 struct node{
-    int x;
+	int x;
 	node(int _x=0):x(_x){}
 	node operator+(const node &o){ // merge function
 		return node(x^o.x);
