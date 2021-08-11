@@ -32,3 +32,13 @@ T segmentSegmentDistance(PT<T> A, PT<T> B, PT<T> C, PT<T> D){
 	T mn2 = min(pointSegmentDistance(C,D,A),pointSegmentDistance(C,D,B));
 	return min(mn1,mn2);
 }
+
+template<class T>
+PT<double> lineIntersection(PT<T> a, PT<T> b, PT<T> c, PT<T> d){
+	b = b - a; d = d - c; c = c - a;
+	double x = PT<double>(c.x,c.y) ^ PT<double>(d.x,d.y);
+	double y = PT<double>(b.x,b.y) ^ PT<double>(d.x,d.y);
+	assert(fabs(y) > eps);
+	double t = x / y;
+	return PT<double>(a.x + t * b.x, a.y + t * b.y);
+}
