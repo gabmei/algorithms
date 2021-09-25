@@ -2,10 +2,9 @@ const int mod=1e9+7;
 template<class T>
 T binExp(T a, long long e){
     T r(1);
-    while(e){
-        if(e&1)r*=a;
-        a*=a;
-        e>>=1;
+    for(;e;e>>=1){
+        if(e&1)r = r * a;
+        a = a * a;
     }
     return r;
 }
