@@ -1,27 +1,21 @@
-#include<bits/stdc++.h>
-using namespace std;
-typedef long long ll;
-const ll inf = 1e15;
-struct Edge{
-	int u,v;
-	ll cap,flow;
-	Edge(int _u,int _v, ll cap):u(_u),v(_v),cap(cap),flow(0ll){}
-};
-
+template<class T>
 struct Dinic{
-	const ll flow_inf=1e18;
-    int m = 0, n;
+	struct Edge{
+		int u,v;
+		T cap,flow;
+		Edge(int _u,int _v, T _cap):u(_u),v(_v),cap(_cap),flow(0){}
+	};
+	int m = 0, n;
 	vector<Edge>edges;
 	vector<vector<int>>adj;
 	vector<int>dist,ptr;
 
 	Dinic(int _n):n(_n),adj(n),dist(n),ptr(n){}
-
-	void addEdge(int u, int v, ll cap){
+	void addEdge(int u, int v, T cap){
 		if(u!=v) {
 			edges.emplace_back(u,v,cap);
 			edges.emplace_back(v,u,0);
-            adj[u].emplace_back(m++);
+			adj[u].emplace_back(m++);
 			adj[v].emplace_back(m++);
 		}		
 	}
@@ -33,7 +27,7 @@ struct Dinic{
 
 		while(!q.empty()){
 			int u = q.front();
-            q.pop();
+			q.pop();
 			if(u==t)break;
 
 			for(int id:adj[u]){
@@ -48,97 +42,40 @@ struct Dinic{
 		return dist[t]!=n+1;
 	}
 
-	ll dfs(int u, int t,ll flow){
+	T dfs(int u, int t, T flow){
 		if(u==t||flow==0){
 			return flow;
 		}
 
-		for(int &i=ptr[u];i<(int)adj[u].size();i++){
+		for(int &i=ptr[u];i<(int)adj[u].size();++i){
 			Edge &e=edges[adj[u][i]];
 			Edge &oe=edges[adj[u][i]^1];
 
 			if(dist[e.v]==dist[e.u]+1){
-				ll amt=e.cap-e.flow;
+				T amt=e.cap-e.flow;
 				amt=min(flow,amt);
 
-				if(ll ret=dfs(e.v,t,amt)){
+				if(T ret=dfs(e.v,t,amt)){
 					e.flow+=ret;
 					oe.flow-=ret;
 					return ret;
 				}
 			}
 		}
-		return 0ll;
+		return 0;
 	}
 
-	ll maxFlow(int s, int t){
-		ll total=0;
+	T maxFlow(int s, int t){
+		T total=0;
 		while(bfs(s,t)){
 			fill(begin(ptr),end(ptr),0);
-			while(ll flow=dfs(s,t,flow_inf)){
+			while(T flow=dfs(s,t,numeric_limits<T>::max())){
 				total+=flow;
 			}
 		}
-
 		return total;
 	}
 	//returns where in the min-cut (S,T) the vertex u is
 	//false: u in S, true: u in T
 	bool cut(int u){return dist[u]==n+1;}
 };
-const int dx[4] = {1,0,-1,0};
-const int dy[4] = {0,1,0,-1};
-
-
-int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int n,m,r,c;
-    cin>>n>>m>>r>>c;
-    vector<vector<ll>>g(n+2,vector<ll>(m+2));
-    for(int i=1;i<=n;++i){
-        for(int j=1;j<=m;++j){
-            cin>>g[i][j];
-        }
-    }
-    g[r][c] = inf;
-    auto get_id = [&](int x, int y){
-        return 2 * (x * (m + 2) + y);
-    };
-    
-    Dinic kinho(2*(n+2)*(m+2));
-    for(int i=1;i<=n;++i){
-        for(int j=1;j<=m;++j){
-            int id = get_id(i,j);
-            kinho.addEdge(id,id^1,g[i][j]);
-            for(int d=0;d<4;++d){
-                int ni = i + dx[d];
-                int nj = j + dy[d];
-                kinho.addEdge(id^1,get_id(ni,nj),inf);
-            }
-        }
-    }
-    int source = get_id(r,c);
-    int sink = get_id(n+1,m+1);
-    for(int i=1;i<=n;++i){
-        kinho.addEdge(get_id(i,0),sink,inf);
-        kinho.addEdge(get_id(i,m+1),sink,inf);
-    }
-    for(int i=1;i<=m;++i){
-        kinho.addEdge(get_id(0,i),sink,inf);
-        kinho.addEdge(get_id(n+1,i),sink,inf);
-    }
-
-    ll ans = kinho.maxFlow(source,sink);
-    cout<<ans<<'\n';
-    for(int i=1;i<=n;++i){
-        for(int j=1;j<=m;++j){
-            int id = get_id(i,j);
-            cout<<(kinho.cut(id) != kinho.cut(id^1)? 'X' : '.');
-        }
-        cout<<'\n';
-    }
-
-    
-    return 0;
-}
