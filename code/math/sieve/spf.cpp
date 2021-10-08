@@ -1,12 +1,11 @@
-typedef long long ll;
-const int lim = 1e6+10;
-int spf[lim];//spf[i]=smallest prime factor of i
-void sieve(int lim){
-	iota(spf,spf+lim,0);//initially spf[i]=i
-	for(int i=2;i<lim;i++){
+const int ms = 1e5+10;
+int spf[ms];//spf[i]=smallest prime factor of i
+void sieve(){
+	iota(spf,spf+ms,0);//initially spf[i]=i
+	for(int i=2;i<ms;i++){
 		if(spf[i]==i){
-			if((ll)i*i > lim)continue;
-			for(int j=i*i;j<lim;j+=i){
+			if(1ll*i*i > ms)continue;
+			for(int j=i*i;j<ms;j+=i){
 				if(spf[j]==j)spf[j]=i;
 			}
 		}
@@ -21,7 +20,6 @@ void getPrimes(int x, T get){
         }
         get(p);
     }
-    return;
 }
 
 vector<int> getDivisors(int x){
