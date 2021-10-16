@@ -42,7 +42,7 @@ struct HLD {
 		}
 		// this includes the ancestor!
 		// check if range [l,r) is valid when IS_EDGE
-		ans.emplace_back(tin[anc] + IS_EDGE, tin[u] + 1);
+		if(tin[anc] + IS_EDGE < tin[u] + 1)ans.emplace_back(tin[anc] + IS_EDGE, tin[u] + 1);
 		return ans;
 	}
 	void prep(int u, int par) {
