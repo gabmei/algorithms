@@ -1,82 +1,38 @@
-typedef long long ll;
-const ll mod = 1e9+7;
-const int N = 2;
-
+const int N = 2, mod=1e9+7;
+ 
+template<class T>
+T binExp(T a, long long e){
+    T r(1);
+    while(e){
+        if(e&1)r=r*a;
+        a=a*a;
+        e>>=1;
+    }
+    return r;
+}
+ 
+struct MB{
+    int x;
+    MB(int _x=0):x(_x){}
+    MB operator +(const MB& o){ return x+o.x >=mod ? x+o.x-mod : x+o.x; }
+    MB operator -(const MB& o){ return x-o.x < 0 ? x-o.x+mod : x-o.x; }
+    MB operator *(const MB& o){ return int(1ll*x*o.x%mod); }
+    friend ostream& operator<< (ostream& os, MB& o) { return os << o.x; }
+    friend istream& operator>> (istream& is, MB& o) { return is >> o.x; }
+};
+ 
 template<class T>
 struct Matrix {
 	vector<vector<T>>a;
-	Matrix(T val=0){
-		a=vector<vector<T>>(N,vector<T>(N,val));
-	}
-	void identity(){
-		for(int i=0;i<N;i++)for(int j=0;j<N;j++)a[i][j]=(i==j);
+	Matrix(bool identity=false):a(N,vector<T>(N)){
+		for(int i=0;i<N;++i)a[i][i] = T(identity);
 	}
 	Matrix operator *(const Matrix& b){
 		Matrix p;
-		for(int i=0;i<N;i++){
-			for(int j=0;j<N;j++){
-				for(int k=0;k<N;k++){
-					p.a[i][k]=(p.a[i][k] + a[i][j]*b.a[j][k])%mod;
-				}
-			}
-		}
+		for(int i=0;i<N;i++)
+			for(int j=0;j<N;j++)
+				for(int k=0;k<N;k++)
+					p.a[i][k]=p.a[i][k] + a[i][j]*b.a[j][k];
 		return p;
 	}
-	Matrix operator +(const Matrix& b){
-		Matrix s;
-		for(int i=0;i<N;i++){
-			for(int j=0;j<N;j++){
-				s.a[i][j]=(a[i][j] + b.a[i][j])%mod;
-			}
-		}
-		return s;
-	}
-	void binExp(ll exp){
-		Matrix<T> ans;ans.identity();
-		
-		while(exp>0){
-			if(exp & 1)ans=ans*(*this);
-			exp/=2;
-			(*this)=(*this)*(*this);
-		}
-
-		(*this) = ans;
-	}
 };
-//S(k) = I + A + A^2 + ... + A^k-1
-/*----------------------------------------------------------*/
-//Recursive geometric sum
-template<class T>
-Matrix<T> GP_sum(Matrix<T> &ratio, ll n){
-	Matrix<T> ret;
-	if(n==0)return ret;
-	Matrix<T> I,A;
-	I.identity();
-	A=ratio;
-	A.binExp(n/2);
-	if(n%2==1)ret=A,A=A*ratio;
-
-	return ret=ret + (I+A)*GP_sum(ratio,n/2);
-}
-/*----------------------------------------------------------*/
-//Iterative geometric sum
-template<class T>
-Matrix<T> GP_sum(Matrix<T> &ratio, ll n){
-
-	Matrix<T> ans,I,ans_pot,magic;
-	I.identity();
-	magic=I;
-	ans_pot=I;
-	while(n>0){
-		if(n&1){
-			ans = ans_pot*magic + ans;
-			ans_pot=ans_pot*ratio;
-		}
-		magic = ratio*magic + magic;
-		ratio=ratio*ratio;
-		n/=2;
-	}
-
-	return ans;
-}
-/*----------------------------------------------------------*/
