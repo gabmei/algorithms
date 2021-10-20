@@ -3,7 +3,7 @@ struct Node{
 	Node():x(0){} //empty constructor
 	Node(long long _x):x(_x){} // init
 	Node operator+(const Node& o){ // merge function
-		return Node(x + o.x);
+		
 	}
 };
 //T: internal type
