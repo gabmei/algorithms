@@ -13,7 +13,6 @@ struct BIT{
     }
     T query(int l, int r){ //query on [l,r]
         if(l==r){
-            if(r==0)return bit[r];
             T ret=bit[r--];
             for(l-=(l&-l);l!=r;r-=(r&-r)){
                 ret-=bit[r];
