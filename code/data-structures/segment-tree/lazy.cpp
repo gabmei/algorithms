@@ -76,8 +76,8 @@ private:
 		}else{
 			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
 			apply(pos);
-			query(esq,tl,mid,l,r,cur);
-			query(dir,mid+1,tr,l,r,cur);
+			query(esq, tl, mid, l, r, cur);
+			query(dir, mid+1, tr, l, r, cur);
 		}
 	}
 	void apply(int pos){
