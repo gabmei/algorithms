@@ -55,8 +55,8 @@ private:
 			cur = cur + tree[pos];
 		}else{
 			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			query(esq,tl,mid,l,r,cur);
-			query(dir,mid+1,tr,l,r,cur);
+			query(esq, tl, mid, l, r, cur);
+			query(dir, mid+1, tr, l, r, cur);
 		}
 	}
 };
