@@ -1,22 +1,22 @@
 struct LazyContext{
 	int x; //atributes
-	LazyContext():x(0){} //empty constructor
+	LazyContext():x(-1){} //empty constructor
 	LazyContext(int _x):x(_x){} // init
 	void operator+=(const LazyContext& o){ // update Lazy
-
+		
 	}
-	bool empty(){ return x == 0; }
-	void reset(){ x = 0; }
+	bool empty(){ return x == -1; }
+	void reset(){ x = -1; }
 
 };
 struct Node{
-	int x; //atributes
+	long long x; //atributes
 	Node():x(0){} //empty constructor
-	Node(int _x):x(_x){} // init
+	Node(long long _x):x(_x){} // init
 	Node operator+(const Node& o){ // merge function
 		
 	}
-	void operator+=(const LazyContext& l){ //update Node with Lazy
+	void apply(const LazyContext& lazy){ //update Node with Lazy
 		
 	}
 };
@@ -57,7 +57,7 @@ private:
 		if(tl>r || tr<l){
 			return;
 		}else if(tl>=l && tr<=r){
-			tree[pos] += val;
+			tree[pos].apply(val);
 			lazy[pos] += val;
 		}else{
 			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
@@ -83,8 +83,11 @@ private:
 	void apply(int pos){
 		if(!lazy[pos].empty()){
 			int esq = 2 * pos, dir = esq + 1;
-			tree[esq] += lazy[pos];tree[dir] += lazy[pos];
-			lazy[esq] += lazy[pos];lazy[dir] += lazy[pos];
+			tree[esq].apply(lazy[pos]);
+			tree[dir].apply(lazy[pos]);
+			
+			lazy[esq] += lazy[pos];
+			lazy[dir] += lazy[pos];
 
 			lazy[pos].reset();
 		}
