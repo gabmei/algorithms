@@ -1,9 +1,9 @@
-struct node{
-	int x; //atributes
-	node():x(0){} //empty constructor
-	node(int _x):x(_x){} // init
-	node operator+(const node &o){ // merge function
-		return node(max(x,o.x));
+struct Node{
+	long long x; //atributes
+	Node():x(0){} //empty constructor
+	Node(long long _x):x(_x){} // init
+	Node operator+(const Node &o){ // merge function
+		return Node(max(x,o.x));
 	}
 };
 //T: internal type
