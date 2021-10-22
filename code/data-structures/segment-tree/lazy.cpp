@@ -7,7 +7,6 @@ struct LazyContext{
 	}
 	bool empty(){ return x == -1; }
 	void reset(){ x = -1; }
-
 };
 struct Node{
 	long long x; //atributes
@@ -20,21 +19,20 @@ struct Node{
 		
 	}
 };
-//T: internal type
-//F: external type
+//T: Node type
 //L: Lazy type
-template<class T, class F, class L>
+template<class T, class L>
 struct SegmentTree{
 public:
 	SegmentTree(int _n=0):n(_n),tree(4*n),lazy(4*n){}
-	void build(const vector<F>& arr){
+	SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n),lazy(4*n){
 		build(1, 0, n-1, arr);
 	}
 	void update(int l, int r, L val){
 		update(1, 0, n-1, l, r, val);
 	}
 	T query(int l, int r){
-		T cur;
+		T cur = T();
 		query(1, 0, n-1, l, r, cur);
 		return cur;
 	}
@@ -42,9 +40,9 @@ private:
 	int n;
 	vector<T>tree;
 	vector<L>lazy;
-	void build(int pos, int tl, int tr, const vector<F>& arr){
+	void build(int pos, int tl, int tr, const vector<T>& arr){
 		if(tl == tr){
-			tree[pos] = T(arr[tl]);
+			tree[pos] = arr[tl];
 		}else{
 			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
 			build(esq, tl, mid, arr);
