@@ -6,6 +6,7 @@ struct Node{
 		
 	}
 };
+
 template<class T>
 struct SegmentTree{
 public:
@@ -17,7 +18,7 @@ public:
 		update(1, 0, n-1, x, val);
 	}
 	T query(int l, int r){
-		T cur = T();
+		T cur = T(); 
 		query(1, 0, n-1, l, r, cur);
 		return cur;
 	}
@@ -35,29 +36,6 @@ private:
 			tree[pos] = tree[esq] + tree[dir];
 		}
 	}
-	void update(int pos, int tl, int tr, int x, const T& val){
-		if(tl==tr){
-			tree[pos] = val;
-		}else{
-			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			if(x<=mid) update(esq, tl, mid, x, val);
-			else update(dir, mid+1, tr, x, val);
-	
-			tree[pos] = tree[esq] + tree[dir];
-		}
-	}
-	void query(int pos, int tl, int tr, int l, int r, T& cur){
-		if(tl>r || tr<l){
-			return;
-		}else if(tl>=l && tr<=r){
-			cur = cur + tree[pos];
-		}else{
-			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			query(esq, tl, mid, l, r, cur);
-			query(dir, mid+1, tr, l, r, cur);
-		}
-	}
-};}
 	void update(int pos, int tl, int tr, int x, const T& val){
 		if(tl==tr){
 			tree[pos] = val;
