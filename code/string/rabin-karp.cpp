@@ -1,7 +1,7 @@
 template<class T, class F = unsigned int>
 struct RabinKarp{
-    int n;
-    vector< F > p, pw;
+	int n;
+	vector< F > p, pw;
 	RabinKarp(){}
     //change C for double hashing
     RabinKarp(const T& s, const F C = 727):n((int)s.size()),p(n+1),pw(n+1,1){
