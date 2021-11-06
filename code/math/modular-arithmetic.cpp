@@ -10,7 +10,7 @@ T binExp(T a, long long e){
 }
 struct MB{
     int x;
-    constexpr MB(int _x=0):x(_x){}
+    constexpr MB(int _x=0):x(_x >= MOD ? _x - MOD : _x < 0 ? _x + MOD : _x){}
     void operator +=(const MB& o){ *this = *this + o; }
     void operator -=(const MB& o){ *this = *this - o; }
     void operator *=(const MB& o){ *this = *this * o; }
@@ -22,6 +22,6 @@ struct MB{
     MB operator *(const MB& o){ return int(1ll*x*o.x%MOD); }
     MB operator /(const MB& o){ return *this * binExp(o,MOD-2); }
     explicit operator int(){return x;}
-    friend ostream& operator<< (ostream& os, MB& o) { return os << o.x; }
+    friend ostream& operator<< (ostream& os, MB o) { return os << o.x; }
     friend istream& operator>> (istream& is, MB& o) { return is >> o.x; }
 };
