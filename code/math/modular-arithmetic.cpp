@@ -21,7 +21,7 @@ struct MB{
     MB operator -(const MB& o){ return x-o.x < 0 ? x-o.x+MOD : x-o.x; }
     MB operator *(const MB& o){ return int(1ll*x*o.x%MOD); }
     MB operator /(const MB& o){ return *this * binExp(o,MOD-2); }
-    operator int(){return x;}
+    explicit operator int(){return x;}
     friend ostream& operator<< (ostream& os, MB& o) { return os << o.x; }
     friend istream& operator>> (istream& is, MB& o) { return is >> o.x; }
 };
