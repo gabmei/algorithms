@@ -34,10 +34,10 @@ struct MB{
     friend MB operator/(MB lhs, const MB& rhs){ return lhs /= rhs; }
 
     MB operator-() const { return MB() - *this; }
+    
     bool operator==(const MB& rhs) const { return x == rhs.x; }
     bool operator!=(const MB& rhs) const { return !(*this == rhs); }
 
-    
     friend ostream& operator<< (ostream& os, MB o) { return os << o.x; }
     friend istream& operator>> (istream& is, MB& o) { return is >> o.x; }
 };
