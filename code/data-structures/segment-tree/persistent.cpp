@@ -26,9 +26,9 @@ int query(Node* on,int tl, int tr, int l, int r){
     if(tl>=r || tr<=l){
         return 0;
     }else if(tl>=l && tr<=r){
-        return on -> v;
+        return on->v;
     }else{
         int mid = (tl + tr)/2;
-        return query(on -> l, tl, mid, l, r) + query(on -> r, mid, tr, l, r);
+        return query(on->l, tl, mid, l, r) + query(on->r, mid, tr, l, r);
     }
 }
