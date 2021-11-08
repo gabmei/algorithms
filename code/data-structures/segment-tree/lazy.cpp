@@ -27,18 +27,18 @@ struct Node{
 template<class T, class L>
 struct SegmentTree{
 public:
-	SegmentTree(int _n=0):n(_n),tree(4*n, T()),lazy(4*n, L()){}
-	SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n, T()),lazy(4*n, L()){
-		build(1, 0, n, arr);
-	}
-	void update(int l, int r, L val){
-		update(1, 0, n, l, r, val);
-	}
-	T query(int l, int r){
-		T cur = T();
-		query(1, 0, n, l, r, cur);
-		return cur;
-	}
+    SegmentTree(int _n=0):n(_n),tree(4*n, T()),lazy(4*n, L()){}
+    SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n, T()),lazy(4*n, L()){
+        build(1, 0, n, arr);
+    }
+    void update(int l, int r, L val){
+        update(1, 0, n, l, r, val);
+    }
+    T query(int l, int r){
+        T cur = T();
+        query(1, 0, n, l, r, cur);
+        return cur;
+    }
 private:
     int n;
     vector<T>tree;

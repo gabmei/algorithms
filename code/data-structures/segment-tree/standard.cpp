@@ -12,18 +12,18 @@ struct Node{
 template<class T>
 struct SegmentTree{
 public:
-	SegmentTree(int _n=0):n(_n),tree(4*n, T()){}
-	SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n, T()){
-		build(1, 0, n, arr);
-	}
-	void update(int x, T val){
-		update(1, 0, n, x, val);
-	}
-	T query(int l, int r){
-		T cur = T(); 
-		query(1, 0, n, l, r, cur);
-		return cur;
-	}
+    SegmentTree(int _n=0):n(_n),tree(4*n, T()){}
+    SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n, T()){
+        build(1, 0, n, arr);
+    }
+    void update(int x, T val){
+        update(1, 0, n, x, val);
+    }
+    T query(int l, int r){
+        T cur = T(); 
+        query(1, 0, n, l, r, cur);
+        return cur;
+    }
 private:
     int n;
     vector<T>tree;
