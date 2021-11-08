@@ -1,93 +1,97 @@
 struct LazyContext{
-	int x; //atributes
-	LazyContext():x(-1){} //empty constructor
-	LazyContext(int _x):x(_x){} // init
-	void operator+=(const LazyContext& o){ // update Lazy
-		
-	}
-	bool empty(){ return x == -1; }
-	void reset(){ x = -1; }
+    int x; //atributes
+    LazyContext():x(-1){} //empty constructor
+    LazyContext(int _x):x(_x){} // init
+    LazyContext& operator+=(const LazyContext& rhs){ // update Lazy
+        /* addition of rhs to *this here */
+        return *this;
+    }
+    bool empty(){ return x == -1; }
+    void reset(){ x = -1; }
 };
 struct Node{
-	long long x; //atributes
-	Node():x(0){} //empty constructor
-	Node(long long _x):x(_x){} // init
-	Node operator+(const Node& o){ // merge function
-		
-	}
-	void apply(const LazyContext& lazy){ //update Node with Lazy
-		
-	}
+    int x; //atributes
+    Node():x(0){} //empty constructor
+    Node(int _x):x(_x){} // init
+    Node& operator+=(const Node& rhs){ // merge function
+        /* addition of rhs to *this here */
+        return *this;
+    }
+    friend Node operator+(Node lhs, const Node& rhs){ return lhs += rhs; }
+    void apply(const LazyContext& lazy){ //update Node with Lazy
+
+    }
 };
 //T: Node type
 //L: Lazy type
 template<class T, class L>
 struct SegmentTree{
 public:
-	SegmentTree(int _n=0):n(_n),tree(4*n),lazy(4*n){}
-	SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n),lazy(4*n){
-		build(1, 0, n-1, arr);
+	SegmentTree(int _n=0):n(_n),tree(4*n, T()),lazy(4*n, L()){}
+	SegmentTree(const vector<T>& arr):n((int)arr.size()),tree(4*n, T()),lazy(4*n, L()){
+		build(1, 0, n, arr);
 	}
 	void update(int l, int r, L val){
-		update(1, 0, n-1, l, r, val);
+		update(1, 0, n, l, r, val);
 	}
 	T query(int l, int r){
 		T cur = T();
-		query(1, 0, n-1, l, r, cur);
+		query(1, 0, n, l, r, cur);
 		return cur;
 	}
 private:
 	int n;
 	vector<T>tree;
 	vector<L>lazy;
-	void build(int pos, int tl, int tr, const vector<T>& arr){
-		if(tl == tr){
-			tree[pos] = arr[tl];
+    static int left (int p){ return 2 * p; }
+    static int right (int p){ return 2 * p + 1; }
+	void build(int p, int tl, int tr, const vector<T>& arr){
+		if(tl + 1 == tr){
+			tree[p] = arr[tl];
 		}else{
-			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			build(esq, tl, mid, arr);
-			build(dir, mid+1, tr, arr);
+			int mid = (tl + tr)/2;
+			build(left(p), tl, mid, arr);
+			build(right(p), mid, tr, arr);
 
-			tree[pos] = tree[esq] + tree[dir];
+			tree[p] = tree[left(p)] + tree[right(p)];
 		}
 	}
-	void update(int pos, int tl, int tr, int l, int r, const L& val){
-		if(tl>r || tr<l){
+	void update(int p, int tl, int tr, int l, int r, const L& val){
+		if(tl>=r || tr<=l){
 			return;
 		}else if(tl>=l && tr<=r){
-			tree[pos].apply(val);
-			lazy[pos] += val;
+			tree[p].apply(val);
+			lazy[p] += val;
 		}else{
-			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			apply(pos);
-			update(esq, tl, mid, l, r, val);
-			update(dir, mid+1, tr, l, r, val);
+			int mid = (tl + tr)/2;
+			apply(p);
+			update(left(p), tl, mid, l, r, val);
+			update(right(p), mid, tr, l, r, val);
 
-			tree[pos] = tree[esq] + tree[dir];
+			tree[p] = tree[left(p)] + tree[right(p)];
 		}
 	}
-	void query(int pos, int tl, int tr, int l, int r, T& cur){
-		if(tl>r || tr<l){
+	void query(int p, int tl, int tr, int l, int r, T& cur){
+		if(tl>=r || tr<=l){
 			return;
 		}else if(tl>=l && tr<=r){
-			cur = cur + tree[pos];
+			cur += tree[p];
 		}else{
-			int mid = (tl + tr)/2, esq = 2 * pos, dir = esq + 1;
-			apply(pos);
-			query(esq, tl, mid, l, r, cur);
-			query(dir, mid+1, tr, l, r, cur);
+			int mid = (tl + tr)/2;
+			apply(p);
+			query(left(p), tl, mid, l, r, cur);
+			query(right(p), mid, tr, l, r, cur);
 		}
 	}
-	void apply(int pos){
-		if(!lazy[pos].empty()){
-			int esq = 2 * pos, dir = esq + 1;
-			tree[esq].apply(lazy[pos]);
-			tree[dir].apply(lazy[pos]);
+	void apply(int p){
+		if(!lazy[p].empty()){
+			tree[left(p)].apply(lazy[p]);
+			tree[right(p)].apply(lazy[p]);
 			
-			lazy[esq] += lazy[pos];
-			lazy[dir] += lazy[pos];
+			lazy[left(p)] += lazy[p];
+			lazy[right(p)] += lazy[p];
 
-			lazy[pos].reset();
+			lazy[p].reset();
 		}
 	}
 };
