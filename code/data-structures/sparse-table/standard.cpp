@@ -2,8 +2,8 @@ template<class T, T (*f)(T, T)>
 struct SparseTable{
     int n, k;
     vector<vector<T>> st;
-    SparseTable(int _n):n(_n), k(__lg(n)){}
-    SparseTable(const vector<T>& v):n(int(v.size())), k(__lg(n)){
+    SparseTable(int _n):n(_n), k(__lg(n) + 1){}
+    SparseTable(const vector<T>& v):n(int(v.size())), k(__lg(n) + 1){
         st.assign(k + 1, vector<T>(n));
         copy(begin(v),end(v),begin(st[0]));
 
