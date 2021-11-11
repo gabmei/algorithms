@@ -32,19 +32,18 @@ struct HLD {
         return tin[u] <= tin[v] && tin[v] < tout[u];
     }
 
-    vector<pair<int, int>> getPathtoAncestor(int u, int anc) {
+    template<class T>
+    void getPathtoAncestor(int u, int anc, T&& get) {
         // returns ranges [l, r) that the path has
-        vector<pair<int, int>> ans;
-
         while(nxt[u] != nxt[anc]) {
-            ans.emplace_back(tin[nxt[u]], tin[u] + 1);
+            get(tin[nxt[u]], tin[u] + 1);
             u = p[nxt[u]];
         }
         // this includes the ancestor!
         // check if range [l,r) is valid when IS_EDGE
-        if(tin[anc] + IS_EDGE < tin[u] + 1)ans.emplace_back(tin[anc] + IS_EDGE, tin[u] + 1);
-        return ans;
+        if(tin[anc] + IS_EDGE < tin[u] + 1)get(tin[anc] + IS_EDGE, tin[u] + 1);
     }
+    
     void prep(int u, int par) {
         sz[u] = 1;
         p[u] = par;
