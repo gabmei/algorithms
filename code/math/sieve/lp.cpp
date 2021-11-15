@@ -1,18 +1,22 @@
-const int ms = 1e6 + 50;
-int spf[ms]; // spf[i] = smallest prime factor of i
+const int ms = 5e5 + 10;
+int lp[ms]; // lp[i]: lowest prime of i
+vector<int> pr;
 void sieve(){
-    iota(spf, spf + ms, 0); // spf[i] = i
     for(int i = 2; i < ms; ++i){
-        if(spf[i] != i || 1ll * i * i > ms) continue;
-        for(int j = i * i; j < ms; j += i){
-            if(spf[j] == j)spf[j] = i;
+        if(lp[i] == 0){
+            lp[i] = i;
+            pr.push_back(i);
+        }
+        for(int p : pr){
+            if(p > lp[i] || i * p >= ms)break;
+            lp[i * p] = p;
         }
     }
 }
 template<class T>
 void getPrimes(int x, T&& get){
     while(x != 1){
-        int p = spf[x];
+        int p = lp[x];
         int e = 0;
         while(x%p==0){
             x/=p;
@@ -36,4 +40,18 @@ vector<int> getDivisors(int x){
         });
     }
     return divisors;
+}
+vector<int> getMasks(int x){
+    vector<int>masks({1});
+    while(x != 1){
+        getPrimes(x, [&x,&masks](int p, int e){
+            int n = (int)masks.size();
+            for(int i = 0; i < n; ++i){
+                int u = masks[i];
+                masks.emplace_back(u * p);
+            }   
+            for(int j = 0; j < e; ++j)x /= p;
+        });
+    }
+    return masks;
 }
