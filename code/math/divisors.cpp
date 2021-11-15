@@ -4,7 +4,7 @@ void getDivisors(T x, F&& get){
         if(x%i==0){
             get(i);
             if(x/i != i)get(x/i);
-            }
+        }
     }
     return;
 }
