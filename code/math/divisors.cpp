@@ -8,3 +8,13 @@ void getDivisors(T x, F&& get){
     }
     return;
 }
+void getPrimes(T x, F&& get){
+    for(T i = 2; i*i <= x; ++i){
+        if(x%i==0){
+            while(x % i == 0)x /= i;
+            get(i);
+        }
+    }
+    if(x > 1)get(x);
+    return;
+}
