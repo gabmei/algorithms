@@ -44,10 +44,22 @@ struct MultiplicativeFunction{
 template<class T>
 using MF = MultiplicativeFunction<T>;
 
+template<class T>
+MF<T> binExp(MF<T> a, long long e){
+    int n = (int)a.ans.size();
+    MF<T> r(n, true);
+    for(; e > 0; e >>= 1){
+        if(e & 1) r *= a;
+        a *= a;
+    }
+    return r;
+}
+
 // Mobius function
 template<class T>
 struct Mobius : MF<T> {
     using MF<T>::MF;
+    using MF<T>::operator=;
     Mobius(int n):MF<T>(n, [](int, int e){
         return e > 1 ? 0 : -1;
     }){};
@@ -57,6 +69,7 @@ struct Mobius : MF<T> {
 template<class T>
 struct PHI : MF<T> {
     using MF<T>::MF;
+    using MF<T>::operator=;
     PHI(int n):MF<T>(n, [](int p, int e){
         T pw = 1;
         for(int j = 0; j < e - 1; ++j) pw *= p;
@@ -68,6 +81,7 @@ struct PHI : MF<T> {
 template<class T>
 struct NUMDIV : MF<T> {
     using MF<T>::MF;
+    using MF<T>::operator=;
     NUMDIV(int n):MF<T>(n, [](int, int e){
         return e + 1;
     }){};
@@ -77,6 +91,7 @@ struct NUMDIV : MF<T> {
 template<class T>
 struct SUMDIV : MF<T> {
     using MF<T>::MF;
+    using MF<T>::operator=;
     SUMDIV(int n):MF<T>(n, [](int p, int e){
         T pw = 1;
         for(int j = 0; j < e + 1; ++j) pw *= p;
