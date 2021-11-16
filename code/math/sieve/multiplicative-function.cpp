@@ -1,9 +1,16 @@
-//f: evaluates the multiplicative function at a prime power
-template<class T, T (*f)(int, int)>
+template<class T>
 struct MultiplicativeFunction{
     vector<T> ans;
     vector<bool> pr;
-    MultiplicativeFunction(int n):ans(n, 1), pr(n, true){
+    //Dirichlet == true: unit function (ans[1] = 1, ans[i] = 0)
+    //Dirichlet == false: constant function (ans[i] = 1)
+    MultiplicativeFunction(int n, bool Dirichlet = true):ans(n){
+        if(Dirichlet) ans[1] = 1;
+        else fill(begin(ans),end(ans),1);
+    }
+    //f: evaluates the multiplicative function at a prime power
+    template<class F>
+    MultiplicativeFunction(int n, F&& f):ans(n, 1), pr(n, 1){
         pr[1] = false;
         for(int i = 2; i < n; ++i){
             if(!pr[i]) continue;
@@ -19,32 +26,60 @@ struct MultiplicativeFunction{
             }
         }
     }
-    const T& operator[](int i){ return ans[i]; }
+    using MF = MultiplicativeFunction<T>;
+    // Dirichlet convolution
+    // f * g [n] = sum of f[d] * g[n/d]
+    MF& operator*=(const MF& rhs){
+        int n = (int)ans.size();
+        vector<T> r(n);
+        for(int i = 1; i < n; ++i)
+            for(int j = i; j < n; j += i)
+                r[j] += ans[i] * rhs[j / i];
+        ans.swap(r);
+        return *this;
+    }
+    friend MF operator*(MF lhs, const MF& rhs){ return lhs *= rhs; }
+    const T& operator[](int i) const { return ans[i]; }
 };
 template<class T>
-T mobiusFunction(int, int e){ return e > 1 ? 0 : -1; }
-template<class T>
-using Mobius = MultiplicativeFunction<T, mobiusFunction<T>>;
+using MF = MultiplicativeFunction<T>;
 
+// Mobius function
 template<class T>
-T eulerTotient(int p, int e){
-    T pw = 1;
-    for(int j = 0; j < e - 1; ++j) pw *= p;
-    return pw * (p - 1);
-}
-template<class T>
-using PHI = MultiplicativeFunction<T, eulerTotient<T>>;
+struct Mobius : MF<T> {
+    using MF<T>::MF;
+    Mobius(int n):MF<T>(n, [](int, int e){
+        return e > 1 ? 0 : -1;
+    }){};
+};
 
+// Euler's totient
 template<class T>
-T numberOfDivisors(int, int e){ return e + 1; }
-template<class T>
-using NUMDIV = MultiplicativeFunction<T, numberOfDivisors<T>>;
+struct PHI : MF<T> {
+    using MF<T>::MF;
+    PHI(int n):MF<T>(n, [](int p, int e){
+        T pw = 1;
+        for(int j = 0; j < e - 1; ++j) pw *= p;
+        return pw * (p - 1);
+    }){};
+};
 
+// Number of divisors
 template<class T>
-T sumOfDivisors(int p, int e){
-    T pw = 1;
-    for(int j = 0; j < e + 1; ++j) pw *= p;
-    return (pw - 1) / (p - 1);
-}
+struct NUMDIV : MF<T> {
+    using MF<T>::MF;
+    NUMDIV(int n):MF<T>(n, [](int, int e){
+        return e + 1;
+    }){};
+};
+
+// Sum of divisors
 template<class T>
-using SUMDIV = MultiplicativeFunction<T, sumOfDivisors<T>>;
+struct SUMDIV : MF<T> {
+    using MF<T>::MF;
+    SUMDIV(int n):MF<T>(n, [](int p, int e){
+        T pw = 1;
+        for(int j = 0; j < e + 1; ++j) pw *= p;
+        return (pw - 1) / (p - 1);
+    }){};
+};
