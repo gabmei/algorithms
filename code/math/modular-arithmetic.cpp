@@ -22,7 +22,9 @@ struct MB{
         return *this; 
     }
     MB& operator*=(const MB& rhs){
-        x = int(1ll * x * rhs.x % MOD);
+        long long y = 1ll * x * rhs.x;
+        if(y >= MOD) y %= MOD;
+        x = int(y);
         return *this;
     }
     MB& operator/=(const MB& rhs){
