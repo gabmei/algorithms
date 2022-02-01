@@ -1,10 +1,9 @@
-// F : modular type (use mod prime)
 // T : input type
-template<class F = MB, class T = string>
+template<class T = string>
 struct RabinKarp{
     int n;
-    vector< F > p[2], pw[2];
-    static constexpr F C[2] = {727, 137}; // double hashing
+    vector<MB> p[2], pw[2];
+    static constexpr MB C[2] = {727, 137}; // double hashing
     RabinKarp(const T& s):n((int)s.size()){
         for(int e = 0; e < 2; ++e){
             p[e].assign(n + 1, 0);
@@ -15,7 +14,9 @@ struct RabinKarp{
             }
         }
     }
-    pair<F, F> hash(int i, int len){
-        return {p[0][i + len] - pw[0][len] * p[0][i], p[1][i + len] - pw[1][len] * p[1][i]};
+    pair<int, int> hash(int i, int len){
+        int h0 = (p[0][i + len] - pw[0][len] * p[0][i]).x;
+        int h1 = (p[1][i + len] - pw[1][len] * p[1][i]).x;
+        return {h0, h1};
     }
 };
