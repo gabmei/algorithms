@@ -1,6 +1,6 @@
-// F : modular type
+// F : modular type (use mod prime)
 // T : input type
-template<class F = unsigned int, class T = string>
+template<class F = MB, class T = string>
 struct RabinKarp{
     int n;
     vector< F > p[2], pw[2];
