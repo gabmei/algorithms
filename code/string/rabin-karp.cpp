@@ -1,9 +1,10 @@
+// F : modular type
+// T : input type
 template<class F = unsigned int, class T = string>
 struct RabinKarp{
     int n;
     vector< F > p[2], pw[2];
-    static constexpr F C[2] = {727, 137};
-    RabinKarp(){}
+    static constexpr F C[2] = {727, 137}; // double hashing
     RabinKarp(const T& s):n((int)s.size()){
         for(int e = 0; e < 2; ++e){
             p[e].assign(n + 1, 0);
