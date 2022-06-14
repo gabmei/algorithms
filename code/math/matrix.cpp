@@ -10,7 +10,7 @@ struct Matrix {
 		for(int i = 0; i < N; ++i)
 			for(int j = 0; j < N; ++j)
 				for(int k = 0; k < N; ++k)
-					p.a[i][k] = p.a[i][k] + a[i][j] * b.a[j][k];
+					p.a[i][k] += a[i][j] * b.a[j][k];
 		return p;
 	}
 };
