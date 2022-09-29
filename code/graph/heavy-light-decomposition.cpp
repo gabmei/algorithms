@@ -52,7 +52,7 @@ struct HLD {
                 h[v] = 1 + h[u];
                 prep(v, u);
                 sz[u] += sz[v];
-                if(sz[v] > sz[adj[u][0]] || adj[u][0] == v) {
+                if(sz[v] > sz[adj[u][0]] || adj[u][0] == par) {
                     swap(adj[u][0], v);
                 }
             }
