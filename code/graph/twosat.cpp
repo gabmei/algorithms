@@ -17,7 +17,7 @@ struct TwoSat {
     E[neg(u)].emplace_back(u);
   }
   void add_not(int u) {
-    add_true(u);
+    add_true(neg(u));
   }
   void add_xor(int u, int v) {
     add_or(u, v);
