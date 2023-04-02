@@ -1,3 +1,5 @@
+// https://github.com/kth-competitive-programming/kactl/blob/main/content/data-structures/LineContainer.h
+// lower hull, max query
 struct Line {
   mutable ll k, m, p;
   bool operator<(const Line& o) const { return k < o.k; }
