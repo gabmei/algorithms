@@ -11,22 +11,11 @@ cat << EOF > "$1.cpp"
 using namespace std;
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    
-    return 0;
+  ios_base::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  return 0;
 }
 EOF
-fi
-}
-contest(){
-if [ ! -e "$1" ]
-then
-    mkdir -p "$1"
-    cp -r /home/gabriel/contests/.vscode $(pwd)/"$1"
-    cd "$1"
-    boilerplate a
-    touch in.txt
-    code .
 fi
 }
