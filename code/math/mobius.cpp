@@ -2,7 +2,6 @@
 const int LIM = 1e6 + 10;
 int mu[LIM];
 vector<int> mask[LIM];
-
 void sieve() {
   mu[1] = 1;
   for(int i = 1; i < LIM; ++i) {
