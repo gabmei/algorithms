@@ -2,11 +2,11 @@ struct Node {
   int x;
   Node() : x(0) {} // neutral element
   Node(int x) : x(x) {}
-  Node& operator+=(Node rhs) {
+  Node& operator+=(const Node& rhs) {
     /* addition to *this */
     return *this;
   }
-  friend Node operator+(Node lhs, Node rhs) {
+  friend Node operator+(Node lhs, const Node& rhs) {
     return lhs += rhs;
   }
 };
