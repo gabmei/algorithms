@@ -1,30 +1,30 @@
 struct LazyContext {
-  int x; //atributes
+  int x;
   bool is_empty;
-  LazyContext() : x(0), is_empty(true) {} //empty constructor
-  LazyContext(int x) : x(x), is_empty(false) {} // init
-  void compose(const LazyContext& rhs) { // update Lazy
-    /* addition of rhs to *this here */
+  LazyContext() : x(0), is_empty(true) {} // neutral element
+  LazyContext(int x) : x(x), is_empty(false) {}
+  void compose(const LazyContext& rhs) {
+    /* addition to *this */
     is_empty &= rhs.is_empty;
   }
   bool empty() const { return is_empty; }
   void reset() { *this = LazyContext(); }
 };
-
 struct Node {
   int x;
-  Node() : x(0) {} //empty constructor
-  Node(int x) : x(x) {} // init
-  Node& operator+=(const Node& rhs) { // merge function
-    /* addition of rhs to *this here */
+  Node() : x(0) {} // neutral element
+  Node(int x) : x(x) {}
+  Node& operator+=(const Node& rhs) {
+    /* addition to *this */
     return *this;
   }
-  friend Node operator+(Node lhs, const Node& rhs) { return lhs += rhs; }
-  void apply(const LazyContext& lazy) { //update Node with Lazy
-
+  friend Node operator+(Node lhs, const Node& rhs) { 
+    return lhs += rhs;
+  }
+  void apply(const LazyContext& lazy) {
+    /* update node with lazy */
   }
 };
-
 template<typename T, typename L>
 struct LazySegmentTree {
 public:
