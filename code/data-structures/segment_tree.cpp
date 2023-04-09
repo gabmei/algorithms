@@ -1,9 +1,9 @@
 struct Node {
-  int x; //atributes
-  Node() : x(0) {} //empty constructor
-  Node(int x) : x(x) {} // init
-  Node& operator+=(const Node& rhs) { // merge function
-    /* addition of rhs to *this here */
+  int x;
+  Node() : x(0) {} // neutral element
+  Node(int x) : x(x) {}
+  Node& operator+=(const Node& rhs) {
+    /* addition to *this */
     return *this;
   }
   friend Node operator+(Node lhs, const Node& rhs) {
@@ -45,7 +45,7 @@ private:
   }
   void update(int p, int tl, int tr, int x, const T& val) {
     if(tl + 1 == tr) {
-      st[p] += val;
+      st[p] = val;
     } else {
       int mid = (tl + tr) / 2;
       if(x < mid) {
