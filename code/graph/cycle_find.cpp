@@ -7,7 +7,9 @@ vector<int> get_cycle(const vector<vector<int>>& adj) {
   auto dfs = [&](auto&& dfs, int u, int p) -> bool {
     vis[u] = on_stack;
     for(auto v : adj[u]) {
-      if(v == p) continue;
+      if(v == p) {
+        continue;
+      }
       if(vis[v] == unvisited) {
         par[v] = u;
         if(dfs(dfs, v, u)) {
@@ -24,7 +26,7 @@ vector<int> get_cycle(const vector<vector<int>>& adj) {
   };
   bool has_cycle = false;
   for(int u = 0; u < n; ++u) {
-    if(vis[u] == unvisited && dfs(dfs, u, par[u])) {
+    if(vis[u] == unvisited && dfs(dfs, u, u)) {
       has_cycle = true;
       break;
     } 
