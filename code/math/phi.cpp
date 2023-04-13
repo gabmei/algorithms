@@ -1,26 +1,28 @@
 const int LIM = 1e6 + 10;
 int phi[LIM];
-void sieve(){
+void sieve() {
   iota(phi, phi + LIM, 0);
-  for(int i = 1; i < LIM; ++i){
-    for(int j = 2 * i; j < LIM; j += i){
-      phi[j] -= phi[i];
+  for(int i = 2; i < LIM; ++i) {
+    if(phi[i] == i) {
+      for(int j = i; j < LIM; j += i) {
+        phi[j] -= phi[j] / i;
+      }
     }
   }
 }
-
-ll phi(ll n) {
-	// initial answer
-	ll ans = n;
-	for(ll p = 2; p * p <= n; ++p) {
-		if(n % p == 0) { //p is prime
-			ans -= ans / p;
-			while(n % p==0) n /= p;
-		}
-	}
-	// we found no prime p<=sqrt(n) which means n is prime
-	if(n > 1) {
-		ans -= ans / n;
-	}
-	return ans;
+template<typename T>
+T phi(T n) {
+  T ans = n;
+  for(T p = 2; p * p <= n; ++p) {
+    if(n % p == 0) {
+      ans -= ans / p;
+      while(n % p == 0) {
+        n /= p;
+      }
+    }
+  }
+  if(n > 1) {
+    ans -= ans / n;
+  }
+  return ans;
 }
