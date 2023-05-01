@@ -7,7 +7,7 @@ struct CoordinateCompression {
     v.erase(unique(begin(v), end(v)), end(v));
     return (int)v.size();
   }
-  int operator[](const T& a) {
+  int operator[](const T& a) const {
     auto it = lower_bound(begin(v), end(v), a);
     return int(it - begin(v));
   }
