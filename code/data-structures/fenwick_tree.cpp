@@ -28,9 +28,9 @@ struct FenwickTree {
   T query(int l, int r) const { // query on [l,r)
     if(l + 1 == r) {
       ++l;
-      T ret = bit[r--];
+      T ret = ft[r--];
       for(l -= lsb(l); l != r; r -= lsb(r)){
-        ret -= bit[r];
+        ret -= ft[r];
       }
       return ret;
     }
