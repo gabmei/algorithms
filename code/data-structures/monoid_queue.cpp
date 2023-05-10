@@ -27,3 +27,5 @@ struct MonoidQueue {
   pair<T, int> get_extremum() const { return m.front(); }
   bool empty() const { return q.empty(); }
 };
+template<typename T>
+using MinQueue = MonoidQueue<T, std::less<T>>;
