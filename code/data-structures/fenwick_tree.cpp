@@ -36,16 +36,18 @@ struct FenwickTree {
     }
     return query(r) - query(l);
   }
-  // first pos such that value pred(query(0, pos + 1)) == false (n if no such value exists)
-  template<typename Pred>
+  // Returns largest r such that pred(query(0, r)) == true (or n if none)
+  template <typename Pred>
   int find_right(Pred&& pred) const {
     T prefix{};
     int pos = 0;
-    for(int pw = (1 << 25); pw > 0; pw >>= 1) {
-      int npos = pos + pw;
-      if(npos > n) continue;
+    for (int x = __lg(n); x >= 0; --x) {
+      int npos = pos + (1 << x);
+      if (npos > n) {
+        continue;
+      }
       T nprefix = prefix + ft[npos];
-      if(pred(nprefix)) {
+      if (pred(nprefix)) {
         pos = npos;
         prefix = nprefix;
       }
