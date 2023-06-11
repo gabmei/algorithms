@@ -8,11 +8,8 @@ struct Combinatorics {
       inv[i] = 1 / fat[i];
     }
   }
-  T choose(int n, int k) { // n choose k
+  T operator()(int n, int k) const {
     return k < 0 || n < k ? 0 : fat[n] * inv[k] * inv[n - k];
-  }
-  T bars(int n, int k) { // n stars and k bars
-    return choose(n + k - 1, k - 1);
   }
   // interpolate points (i, y[i]) and evaluate at x
   T interpolate(const vector<T>& y, T x) {
