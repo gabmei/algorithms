@@ -24,10 +24,10 @@ vector<Point<T>> minkowski(vector<Point<T>> P, vector<Point<T>> Q){
   for(size_t i = 0, j = 0; i < P.size() - 2 || j < Q.size() - 2; ){
     result.push_back(P[i] + Q[j]);
     auto c = cross(P[i + 1] - P[i], Q[j + 1] - Q[j]);
-    if(c >= 0 && i < P.size() - 2) {
+    if(c >= T(0) && i < P.size() - 2) {
       ++i;
     }
-    if(c <= 0 && j < Q.size() - 2) {
+    if(c <= T(0) && j < Q.size() - 2) {
       ++j;
     }
   }
