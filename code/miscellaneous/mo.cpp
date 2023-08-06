@@ -47,10 +47,12 @@ vector<int> mosort_hilbert(int n, const vector<pair<int, int>>& query) {
   return ord;
 }
 template<typename T, typename F>
-vector<F> process_query(int n, const vector<T> a, const vector<pair<int, int>>& query) {
+vector<F> process_query(const vector<T> a, const vector<pair<int, int>>& query) {
+  int n = (int)a.size();
+  int q = (int)query.size();
   auto ord = mosort_hilbert(n, query);
   //auto ord = mosort(query, sqrt(n) + 1);
-  vector<F> ans(n);
+  vector<F> ans(q);
   int mo_l = 0, mo_r = 0;
   F mo_ans{};
   auto add = [&](T x) {
@@ -61,18 +63,10 @@ vector<F> process_query(int n, const vector<T> a, const vector<pair<int, int>>& 
   };
   for(int i : ord) {
     auto [l, r] = query[i];
-    while(mo_l > l) {
-      add(a[--mo_l]);
-    }
-    while(mo_r < r) {
-      add(a[mo_r++]);
-    }
-    while(mo_l < l) {
-      remove(a[mo_l++]);
-    }
-    while(mo_r > r) {
-      remove(a[--mo_r]);
-    }
+    while(mo_l > l) add(a[--mo_l]);
+    while(mo_r < r) add(a[mo_r++]);
+    while(mo_l < l) remove(a[mo_l++]);
+    while(mo_r > r) remove(a[--mo_r]);
     ans[i] = mo_ans;
   }
   return ans;
