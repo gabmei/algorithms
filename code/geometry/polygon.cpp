@@ -13,9 +13,8 @@ bool point_inside_triangle(Point<T> P, Point<T> A, Point<T> B, Point<T> C) {
 // polygon must be ordered counterclockwise
 template<typename T>
 bool point_inside_convex_polygon(Point<T> P, const vector<Point<T>>& poly) {
-  if(poly.size() == 1) {
-    return poly[0] == P;
-  }
+  if(poly.size() == 1) return P == poly[0];
+  if(poly.size() == 2) return on_segment(P, Line(poly[0], poly[1] - poly[0]));
   int l = 1, r = (int)poly.size() - 1;
   while(r - l > 1) {
     int m = (l + r) / 2;
