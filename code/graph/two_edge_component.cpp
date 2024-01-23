@@ -65,7 +65,6 @@ struct TwoEdgeComponent {
       for(auto [v, _] : adj[u]) {
         if(bcc[u] != bcc[v]) {
           g[bcc[u]].emplace_back(bcc[v]);
-          g[bcc[v]].emplace_back(bcc[u]);
         }
       }
     }
