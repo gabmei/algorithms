@@ -17,6 +17,7 @@ vector<Point<T>> convex_hull(vector<Point<T>> pts) {
 
 template<typename T>
 int maximize_dot_product(const vector<Point<T>>& h, const Point<T>& vec) {
+  // might not work if there are 3 colinear points
   int n = (int)h.size();
   int ans = 0;
   for(int rep = 0; rep < 2; ++rep) {
