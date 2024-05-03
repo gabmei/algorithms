@@ -14,3 +14,24 @@ vector<Point<T>> convex_hull(vector<Point<T>> pts) {
   lower.insert(lower.end(), upper.rbegin(), upper.rend() - 1);
   return lower;
 }
+
+template<typename T>
+int maximize_dot_product(const vector<Point<T>>& h, const Point<T>& vec) {
+  int n = (int)h.size();
+  int ans = 0;
+  for(int rep = 0; rep < 2; ++rep) {
+    int lo = 0, hi = n - 1;
+    while(lo < hi) {
+      int mid = (lo + hi) / 2;
+      auto d1 = dot(h[mid + 1] - h[0], vec), d2 = dot(h[mid + 1] - h[mid], vec);
+      bool check = d2 > T(0);
+      if(rep == 0) check = check && d1 > T(0);
+      else check = check || d1 - d2 <= T(0);
+ 
+      if(check) lo = mid + 1;
+      else hi = mid;
+    }
+    if(dot(h[ans], vec) < dot(h[lo], vec)) ans = lo;
+  }
+  return ans;
+}
