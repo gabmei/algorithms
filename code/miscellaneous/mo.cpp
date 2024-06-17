@@ -16,10 +16,10 @@ vector<int> mosort(const vector<pair<int, int>>& query, const int B) {
 }
 int64_t xy2d_hilbert(int n, int x, int y) {
   int64_t d = 0;
-  for (int64_t s = n / 2; s > 0; s >>= 1) {
+  for (int s = n / 2; s > 0; s >>= 1) {
     int rx = (x & s) > 0;
     int ry = (y & s) > 0;
-    d += s * s * ((3 * ry) ^ rx);
+    d += (int64_t) s * s * ((3 * ry) ^ rx);
     if (rx == 0) {
       if (ry == 1) {
         x = s - 1 - x;
