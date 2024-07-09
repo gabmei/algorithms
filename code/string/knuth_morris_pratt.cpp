@@ -1,5 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
 template<typename T>
 vector<int> get_border(const T& s) {
   int n = (int)s.size();
