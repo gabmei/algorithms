@@ -4,9 +4,8 @@ struct TrieType {
 };
 template<typename TrieType>
 struct Trie {
-  static const TrieType T;
   struct Node {
-    int nxt[T.ALPHA] {};
+    int nxt[TrieType::ALPHA] {};
     int cnt = 0;
     bool terminal = false;
   };
@@ -16,7 +15,7 @@ struct Trie {
   void add_word(Iterator first, Iterator last) {
     int cur = 0;
     for(; first != last; ++first) {
-      auto ch = T.f(*first);
+      auto ch = TrieType::f(*first);
       if(tr[cur].nxt[ch] == 0) {
         tr[cur].nxt[ch] = int(tr.size());
         tr.emplace_back();
