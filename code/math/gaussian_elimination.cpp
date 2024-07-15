@@ -4,8 +4,8 @@ struct GaussianElimination {
   static bool cmp(const T& a, const T& b) { return a == b; }
   vector<vector<T>> a, inv;
   vector<int> pivot;
-  GaussianElimination(const vector<vector<T>>& _a = {}):a(_a) {}
-  void addEquation(const vector<T>& equation) {
+  GaussianElimination(const vector<vector<T>> a = {}) : a(a) {}
+  void add_equation(const vector<T>& equation) {
     a.emplace_back(equation);
   }
   /*
@@ -13,7 +13,7 @@ struct GaussianElimination {
     pair(1, ans) one solution
     pair(2, ans) infinite solutions
   */
-  pair<int, vector<T>> solveSystem(bool findInverse = false) {
+  pair<int, vector<T>> solve_system(bool findInverse = false) {
     int n = (int)a.size();
     int m = (int)a[0].size() - 1;
     pivot.assign(m, -1);
