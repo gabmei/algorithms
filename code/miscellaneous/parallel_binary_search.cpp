@@ -12,8 +12,8 @@ for(int l = 0; l < 20; ++l) {
   for(int m = 0; m < q; ++m) {
     add(m); // maintain prefix of elements
     for(auto i : on[m]) {
-      if(check(i)) L[i] = m + 1;
-      else R[i] = m;
+      if(check(i)) R[i] = m;
+      else L[i] = m + 1;
     }
   }
 }
