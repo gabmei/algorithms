@@ -1,7 +1,6 @@
 vector<pair<int, int>> adj[MAXN];
 int ind[MAXN], outd[MAXN];
-vector<int> path;
-vector<int> path_edges;
+vector<int> path, path_edges;
 void calc_deg(int n) {
   for(int u = 0; u < n; ++u) {
     for(auto [v, id] : adj[u]) {
