@@ -37,16 +37,16 @@ struct MinCostMaxFlow{
       auto u = q.front();
       q.pop();
       inq[u] = false;
-      for(int e = first[u]; e != -1; e = edges[e].next) {
-        auto ed = edges[e];
-        Cost w = ed.cost + pot[u] - pot[ed.to];
-        if(ed.res() > 0 && dist[ed.to] > dist[u] + w) {
-          from[ed.to] = e;
-          dist[ed.to] = dist[u] + w;
-          neck[ed.to] = min(neck[u], ed.res());
-          if(!inq[ed.to]) {
-            inq[ed.to] = true;
-            q.push(ed.to);
+      for(int id = first[u]; id != -1; id = edges[id].next) {
+        auto e = edges[id];
+        Cost w = e.cost + pot[u] - pot[e.to];
+        if(e.res() > 0 && dist[e.to] > dist[u] + w) {
+          from[e.to] = id;
+          dist[e.to] = dist[u] + w;
+          neck[e.to] = min(neck[u], e.res());
+          if(!inq[e.to]) {
+            inq[e.to] = true;
+            q.push(e.to);
           }
         }
       }
@@ -64,13 +64,13 @@ struct MinCostMaxFlow{
       auto [d_u, u] = pq.top();
       pq.pop();
       if(dist[u] != d_u) continue;
-      for(int e = first[u]; e != -1; e = edges[e].next) {
-        auto ed = edges[e];
-        Cost w = ed.cost + pot[u] - pot[ed.to];
-        if(ed.res() > 0 && dist[ed.to] > dist[u] + w) {
-          from[ed.to] = e;
-          pq.push({dist[ed.to] = dist[u] + w, ed.to});
-          neck[ed.to] = min(neck[u], ed.res());
+      for(int id = first[u]; id != -1; id = edges[id].next) {
+        auto e = edges[id];
+        Cost w = e.cost + pot[u] - pot[e.to];
+        if(e.res() > 0 && dist[e.to] > dist[u] + w) {
+          from[e.to] = id;
+          pq.push({dist[e.to] = dist[u] + w, e.to});
+          neck[e.to] = min(neck[u], e.res());
         }
       }
     }
