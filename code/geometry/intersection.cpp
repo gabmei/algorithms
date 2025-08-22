@@ -59,7 +59,9 @@ Point<T> line_intersection(Line<T> line1, Line<T> line2) {
 template<typename T = Double<double>>
 vector<Point<T>> segment_segment_intersection(Line<T> seg1, Line<T> seg2) {
   vector<Point<T>> intersection;
-  if(same_line(seg1, seg2)) {
+  auto dd = cross(seg1.d, seg2.d);
+  auto ls = cross(seg2.A - seg1.A, seg1.d);
+  if(dd == T(0) && ls == T(0)) {
     if(dot(seg1.d, seg2.d) < T(0)) {
       seg2 = Line(seg2.B(), seg2.A - seg2.B());
     }
@@ -69,10 +71,12 @@ vector<Point<T>> segment_segment_intersection(Line<T> seg1, Line<T> seg2) {
       intersection.emplace_back(L);
       if(L != R) intersection.emplace_back(R);
     }
-  } else if(!collinear(seg1, seg2)) {
-    Point<T> inter = line_intersection(seg1, seg2);
-    if(on_segment(inter, seg1) && on_segment(inter, seg2)) {
-      intersection.emplace_back(inter);
+  } else if(dd != T(0)) {
+    auto rs = cross(seg2.A - seg1.A, seg2.d);
+    if(dd < T(0)) dd = -dd, ls = -ls, rs = -rs;
+    bool intersect = 0 <= ls && ls <= dd && 0 <= rs && rs <= dd;
+    if(intersect) {
+      intersection.emplace_back(seg1.A + seg1.d * rs / dd);
     }
   }
   return intersection;
