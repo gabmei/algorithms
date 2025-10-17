@@ -35,7 +35,7 @@ public:
         lp += st[l++];
       }
       if(r & 1) {
-        rp += st[--r];
+        rp = st[--r] + rp;
       }
     }
     return lp + rp;
